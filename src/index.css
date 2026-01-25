@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-main: var(--bg-main);
+  --color-bg-surface: var(--bg-surface);
+  --color-border-main: var(--border-main);
+
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --shadow-glow-cyan: 0 0 20px rgba(34, 211, 238, 0.35);
+  --shadow-glow-indigo: 0 0 20px rgba(79, 70, 229, 0.4);
+}
+
+/* Base Theme - Dark (Default) */
+:root {
+  /* Core */
+  --bg-main: #0B0F1A;
+  --bg-surface: #111827;
+  --border-main: #1F2937;
+
+  /* Brand */
+  --brand: #4F46E5;
+  --brand-hover: #6366F1;
+
+  /* Accent */
+  --accent: #22D3EE;
+  --accent-soft: #67E8F9;
+
+  /* Text */
+  --text-primary: #E5E7EB;
+  --text-secondary: #9CA3AF;
+  --text-muted: #64748B;
+}
+
+/* Light Theme override */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-main: #F8FAFC;
+    --bg-surface: #FFFFFF;
+    --border-main: #E5E7EB;
+
+    --brand: #4F46E5;
+    --brand-hover: #4338CA;
+
+    --accent: #0891B2;
+    --accent-soft: #22D3EE;
+
+    --text-primary: #020617;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
+  }
+}
+
+/* Base styles */
+body {
+  @apply antialiased bg-bg-main text-text-primary transition-colors duration-300;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-main);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Utilities */
+.glass-panel {
+  @apply bg-bg-surface/80 backdrop-blur-md border border-border-main;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+}
+
+@keyframes pan {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 100% 0;
+  }
+}
+
+.animate-pan {
+  animation: pan 60s linear infinite;
+}
