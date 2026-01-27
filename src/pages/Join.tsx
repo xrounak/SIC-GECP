@@ -69,9 +69,9 @@ export default function Join() {
     };
 
     return (
-        <div className="bg-bg-main min-h-screen py-24 relative overflow-hidden">
+        <div className="bg-bg-main min-h-screen py-24 relative overflow-hidden transition-colors duration-500">
             {/* Background Ambient Glow */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -82,10 +82,10 @@ export default function Join() {
                     </p>
                 </div>
 
-                <div className="bg-bg-surface rounded-2xl shadow-2xl border border-border-main p-8 sm:p-12 backdrop-blur-sm">
+                <div className="theme-card p-8 sm:p-12 backdrop-blur-sm">
                     {status === 'success' ? (
                         <div className="text-center py-12">
-                            <div className="w-16 h-16 bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
+                            <div className="w-16 h-16 bg-green-900/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/50 shadow-sm">
                                 <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
@@ -96,7 +96,7 @@ export default function Join() {
                             </p>
                             <button
                                 onClick={() => setStatus('idle')}
-                                className="px-6 py-2 bg-brand text-white rounded-lg hover:bg-brand-hover transition-colors shadow-lg shadow-brand/20"
+                                className="theme-button px-8 py-3 font-semibold transition-all"
                             >
                                 Submit New Application
                             </button>
@@ -104,14 +104,14 @@ export default function Join() {
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             {status === 'error' && (
-                                <div className="bg-red-900/20 border border-red-500/50 text-red-200 p-4 rounded-lg text-sm mb-6">
+                                <div className="bg-red-900/10 border border-red-500/30 text-red-200 p-4 rounded-lg text-sm mb-6" style={{ borderRadius: 'var(--radius-main)' }}>
                                     {errorMessage}
                                 </div>
                             )}
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label htmlFor="name" className="block text-sm font-medium text-text-secondary mb-1">
+                                <div className="space-y-1">
+                                    <label htmlFor="name" className="block text-sm font-medium text-text-secondary ml-1">
                                         Full Name
                                     </label>
                                     <input
@@ -121,14 +121,14 @@ export default function Join() {
                                         required
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-bg-main rounded-lg border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-colors placeholder-text-muted"
+                                        className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-text-muted"
                                         placeholder="John Doe"
                                         disabled={status === 'submitting'}
                                     />
                                 </div>
 
-                                <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-1">
+                                <div className="space-y-1">
+                                    <label htmlFor="email" className="block text-sm font-medium text-text-secondary ml-1">
                                         Email Address
                                     </label>
                                     <input
@@ -138,7 +138,7 @@ export default function Join() {
                                         required
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-bg-main rounded-lg border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-colors placeholder-text-muted"
+                                        className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-text-muted"
                                         placeholder="john@example.com"
                                         disabled={status === 'submitting'}
                                     />
@@ -146,8 +146,8 @@ export default function Join() {
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label htmlFor="branch" className="block text-sm font-medium text-text-secondary mb-1">
+                                <div className="space-y-1">
+                                    <label htmlFor="branch" className="block text-sm font-medium text-text-secondary ml-1">
                                         Branch
                                     </label>
                                     <select
@@ -156,7 +156,7 @@ export default function Join() {
                                         required
                                         value={formData.branch}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-bg-main rounded-lg border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-colors"
+                                        className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-all"
                                         disabled={status === 'submitting'}
                                     >
                                         <option value="" className="bg-bg-main">Select Branch</option>
@@ -169,8 +169,8 @@ export default function Join() {
                                     </select>
                                 </div>
 
-                                <div>
-                                    <label htmlFor="year" className="block text-sm font-medium text-text-secondary mb-1">
+                                <div className="space-y-1">
+                                    <label htmlFor="year" className="block text-sm font-medium text-text-secondary ml-1">
                                         Year
                                     </label>
                                     <select
@@ -179,7 +179,7 @@ export default function Join() {
                                         required
                                         value={formData.year}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-3 bg-bg-main rounded-lg border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-colors"
+                                        className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-all"
                                         disabled={status === 'submitting'}
                                     >
                                         <option value="" className="bg-bg-main">Select Year</option>
@@ -191,8 +191,8 @@ export default function Join() {
                                 </div>
                             </div>
 
-                            <div>
-                                <label htmlFor="skills" className="block text-sm font-medium text-text-secondary mb-1">
+                            <div className="space-y-1">
+                                <label htmlFor="skills" className="block text-sm font-medium text-text-secondary ml-1">
                                     Technical Skills
                                 </label>
                                 <input
@@ -202,14 +202,14 @@ export default function Join() {
                                     required
                                     value={formData.skills}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 bg-bg-main rounded-lg border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-colors placeholder-text-muted"
+                                    className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-text-muted"
                                     placeholder="React, Python, UI/UX, etc."
                                     disabled={status === 'submitting'}
                                 />
                             </div>
 
-                            <div>
-                                <label htmlFor="motivation" className="block text-sm font-medium text-text-secondary mb-1">
+                            <div className="space-y-1">
+                                <label htmlFor="motivation" className="block text-sm font-medium text-text-secondary ml-1">
                                     Why do you want to join SIC?
                                 </label>
                                 <textarea
@@ -219,7 +219,7 @@ export default function Join() {
                                     rows={4}
                                     value={formData.motivation}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 bg-bg-main rounded-lg border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-colors placeholder-text-muted"
+                                    className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-text-muted"
                                     placeholder="Tell us about your interests and what you hope to achieve..."
                                     disabled={status === 'submitting'}
                                 />
@@ -229,7 +229,7 @@ export default function Join() {
                                 <button
                                     type="submit"
                                     disabled={status === 'submitting'}
-                                    className={`w-full bg-brand hover:bg-brand-hover text-white font-bold py-4 rounded-lg shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed`}
+                                    className="theme-button w-full py-4 font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {status === 'submitting' ? 'Submitting...' : 'Submit Application'}
                                 </button>

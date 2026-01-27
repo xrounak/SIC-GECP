@@ -22,9 +22,9 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
             exit={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black overflow-hidden perspective-1000"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-bg-main overflow-hidden perspective-1000"
         >
-            {/* Video Background */}
+            {/* Ambient Background */}
             <div className="absolute inset-0 z-0">
                 <video
                     autoPlay
@@ -32,17 +32,17 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
                     loop
                     playsInline
                     onLoadedData={() => setIsVideoLoaded(true)}
-                    className={`w-full h-full object-cover transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-60' : 'opacity-0'}`}
+                    className={`w-full h-full object-cover transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-30' : 'opacity-0'}`}
                 >
                     <source src={VIDEO_URL} type="video/mp4" />
                 </video>
-                {/* CSS Fallback / Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F1A] via-transparent to-[#0B0F1A] opacity-90" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-900/30 via-[#0B0F1A]/50 to-[#0B0F1A]" />
+                {/* Theme-aware overlays */}
+                <div className="absolute inset-0 bg-gradient-to-t from-bg-main via-transparent to-bg-main opacity-80" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand/10 via-transparent to-transparent" />
             </div>
 
-            {/* Content Container with 3D Depth */}
-            <div className="relative z-10 text-center transform-style-3d">
+            {/* Content Container */}
+            <div className="relative z-10 text-center">
                 {/* Logo Icon Animation */}
                 <motion.div
                     initial={{ scale: 0, rotateZ: -180, opacity: 0 }}
@@ -50,8 +50,8 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                     className="mb-8 inline-block"
                 >
-                    <div className="w-24 h-24 bg-gradient-to-tr from-brand to-accent rounded-2xl flex items-center justify-center shadow-[0_0_50px_rgba(79,70,229,0.6)] backdrop-blur-xl border border-white/20">
-                        <span className="text-5xl">⚛️</span>
+                    <div className="theme-card w-28 h-28 flex items-center justify-center backdrop-blur-3xl">
+                        <span className="text-5xl font-black text-brand italic drop-shadow-sm">SIC</span>
                     </div>
                 </motion.div>
 
@@ -61,9 +61,10 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
                         initial={{ y: 100, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
-                        className="text-6xl md:text-8xl font-black tracking-tighter text-white mb-4 drop-shadow-[0_0_20px_rgba(34,211,238,0.5)]"
+                        className="liquid-text text-5xl md:text-8xl font-black tracking-tighter mb-4 text-center"
+                        data-text="unknownGmr02"
                     >
-                        SIC
+                        unknownGmr02
                     </motion.h1>
                 </div>
 
@@ -74,26 +75,28 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
                     transition={{ delay: 1.2, duration: 0.8 }}
                     className="relative"
                 >
-                    <p className="text-xl md:text-2xl text-accent font-light tracking-widest uppercase">
+                    <p className="text-xl md:text-2xl text-brand font-medium tracking-widest uppercase">
                         Science & Innovation Club
                     </p>
 
-                    {/* Scanning Line Effect */}
+                    {/* Scanning Line Effect (Theme aware) */}
                     <motion.div
                         initial={{ left: '-100%' }}
                         animate={{ left: '200%' }}
                         transition={{ delay: 1.5, duration: 2, repeat: Infinity, ease: "linear" }}
-                        className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 pointer-events-none"
+                        className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-brand/10 to-transparent skew-x-12 pointer-events-none"
                     />
                 </motion.div>
 
                 {/* Loading Bar */}
-                <motion.div
-                    initial={{ width: 0, opacity: 0 }}
-                    animate={{ width: "200px", opacity: 1 }}
-                    transition={{ delay: 0.8, duration: 2.5, ease: "circOut" }}
-                    className="h-1 bg-gradient-to-r from-brand to-accent mt-12 mx-auto rounded-full shadow-[0_0_15px_rgba(34,211,238,0.8)]"
-                />
+                <div className="w-[240px] h-1 bg-border-main mt-12 mx-auto rounded-full overflow-hidden">
+                    <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ delay: 0.8, duration: 2.5, ease: "easeInOut" }}
+                        className="h-full bg-brand shadow-[0_0_15px_var(--brand)]"
+                    />
+                </div>
             </div>
         </motion.div>
     );

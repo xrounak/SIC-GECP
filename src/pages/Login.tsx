@@ -36,45 +36,47 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-bg-main px-4">
-            <div className="max-w-md w-full space-y-8 bg-bg-surface p-8 rounded-2xl border border-border-main shadow-2xl relative overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-bg-main px-4 transition-colors duration-500">
+            <div className="theme-card max-w-md w-full space-y-8 p-8 relative overflow-hidden backdrop-blur-sm">
                 {/* Decorative Glow */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand/20 rounded-full blur-[60px] pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full blur-[60px] pointer-events-none" />
 
-                <div className="text-center">
+                <div className="text-center relative z-10">
                     <h2 className="text-3xl font-bold text-text-primary">Admin Access</h2>
                     <p className="mt-2 text-text-secondary text-sm">Sign in to manage the innovation hub</p>
                 </div>
 
-                <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+                <form className="mt-8 space-y-6 relative z-10" onSubmit={handleLogin}>
                     {error && (
-                        <div className="p-3 bg-red-900/20 border border-red-500/50 text-red-200 text-sm rounded-lg">
+                        <div className="p-3 bg-red-900/10 border border-red-500/30 text-red-200 text-sm rounded-lg" style={{ borderRadius: 'var(--radius-main)' }}>
                             {error}
                         </div>
                     )}
 
                     <div className="space-y-4">
-                        <div>
-                            <label htmlFor="email" className="text-sm font-medium text-text-secondary block mb-1">Email</label>
+                        <div className="space-y-1">
+                            <label htmlFor="email" className="text-sm font-medium text-text-secondary block ml-1">Email</label>
                             <input
                                 id="email"
                                 name="email"
                                 type="email"
                                 required
-                                className="w-full px-4 py-3 bg-bg-main border border-border-main rounded-lg focus:ring-2 focus:ring-brand focus:border-brand text-text-primary placeholder-text-muted transition-colors"
+                                className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary placeholder-text-muted transition-all focus:ring-2 focus:ring-brand focus:border-brand"
+                                style={{ borderRadius: 'var(--radius-main)' }}
                                 placeholder="admin@sic.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                        <div>
-                            <label htmlFor="password" className="text-sm font-medium text-text-secondary block mb-1">Password</label>
+                        <div className="space-y-1">
+                            <label htmlFor="password" className="text-sm font-medium text-text-secondary block ml-1">Password</label>
                             <input
                                 id="password"
                                 name="password"
                                 type="password"
                                 required
-                                className="w-full px-4 py-3 bg-bg-main border border-border-main rounded-lg focus:ring-2 focus:ring-brand focus:border-brand text-text-primary placeholder-text-muted transition-colors"
+                                className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary placeholder-text-muted transition-all focus:ring-2 focus:ring-brand focus:border-brand"
+                                style={{ borderRadius: 'var(--radius-main)' }}
                                 placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -85,13 +87,13 @@ export default function Login() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(79,70,229,0.3)]"
+                        className="theme-button w-full flex justify-center py-3 px-4 text-sm font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? 'Authenticating...' : 'Sign in'}
                     </button>
                 </form>
 
-                <div className="text-center mt-4">
+                <div className="text-center mt-4 relative z-10">
                     <p className="text-xs text-text-muted">
                         Don't have an account? Ask an existing admin or check the Supabase dashboard.
                     </p>

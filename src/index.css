@@ -19,49 +19,213 @@
   --shadow-glow-indigo: 0 0 20px rgba(79, 70, 229, 0.4);
 }
 
-/* Base Theme - Dark (Default) */
+/* Base Theme Variables & Defaults */
 :root {
-  /* Core */
   --bg-main: #0B0F1A;
   --bg-surface: #111827;
   --border-main: #1F2937;
-
-  /* Brand */
   --brand: #4F46E5;
   --brand-hover: #6366F1;
-
-  /* Accent */
   --accent: #22D3EE;
-  --accent-soft: #67E8F9;
-
-  /* Text */
   --text-primary: #E5E7EB;
   --text-secondary: #9CA3AF;
   --text-muted: #64748B;
+
+  /* Defaults */
+  --radius-main: 12px;
+  --border-width: 1px;
+  --shadow-main: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --backdrop-blur: 0px;
+  --card-blur: 0px;
+  --button-transform: none;
+  --font-main: 'Inter', sans-serif;
 }
 
-/* Light Theme override */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-main: #F8FAFC;
-    --bg-surface: #FFFFFF;
-    --border-main: #E5E7EB;
+/* 🧱 1. Neo-Brutalism - RAW & BOLD */
+[data-theme='brutalism'] {
+  --bg-main: #FDE047;
+  /* Bright Yellow */
+  --bg-surface: #FFFFFF;
+  --border-main: #000000;
+  --brand: #000000;
+  --brand-hover: #333333;
+  --accent: #FF5D01;
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --text-muted: #333333;
+  --radius-main: 0px;
+  --border-width: 4px;
+  --shadow-main: 8px 8px 0px #000000;
+}
 
-    --brand: #4F46E5;
-    --brand-hover: #4338CA;
+/* ☁️ 2. Neumorphism - SOFT & TACTILE */
+[data-theme='neumorphism'] {
+  --bg-main: #E0E5EC;
+  --bg-surface: #E0E5EC;
+  --border-main: transparent;
+  --brand: #4A90E2;
+  --brand-hover: #357ABD;
+  --accent: #F5A623;
+  --text-primary: #4A4A4A;
+  --text-secondary: #6B6B6B;
+  --text-muted: #9B9B9B;
+  --radius-main: 32px;
+  --border-width: 0px;
+  --shadow-main: 9px 9px 16px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+  --neu-inner: inset 3px 3px 7px rgba(136, 165, 191, 0.48), inset -3px -3px 7px #FFFFFF;
+}
 
-    --accent: #0891B2;
-    --accent-soft: #22D3EE;
+/* 🧊 3. Glassmorphism - FROSTED & DEEP (Standard premium) */
+[data-theme='glassmorphism'] {
+  --bg-main: #030014;
+  --bg-surface: rgba(255, 255, 255, 0.03);
+  --border-main: rgba(255, 255, 255, 0.1);
+  --brand: #7C3AED;
+  --brand-hover: #8B5CF6;
+  --accent: #06B6D4;
+  --text-primary: #F9FAFB;
+  --shadow-main: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --radius-main: 20px;
+  --card-blur: 16px;
+}
 
-    --text-primary: #020617;
-    --text-secondary: #334155;
-    --text-muted: #64748B;
+/* 🏺 4. Claymorphism - PILLOWY & FRIENDLY */
+[data-theme='claymorphism'] {
+  --bg-main: #FDF2F8;
+  --bg-surface: #ffffff;
+  --border-main: transparent;
+  --brand: #EC4899;
+  --accent: #8B5CF6;
+  --text-primary: #1F2937;
+  --radius-main: 40px;
+  --shadow-main: 20px 20px 60px #d1d1d1, -20px -20px 60px #ffffff, inset -10px -10px 20px rgba(0, 0, 0, 0.05), inset 10px 10px 20px rgba(255, 255, 255, 0.8);
+}
+
+/* 🧘 5. Minimalism - PURE & SHARP */
+[data-theme='minimalism'] {
+  --bg-main: #FFFFFF;
+  --bg-surface: #FAFAFA;
+  --border-main: #E5E5E5;
+  --brand: #000000;
+  --accent: #737373;
+  --text-primary: #171717;
+  --radius-main: 0px;
+  --border-width: 1px;
+  --shadow-main: none;
+}
+
+/* ⚡ 6. Cyberpunk - NEON & GLITCH */
+[data-theme='cyberpunk'] {
+  --bg-main: #050505;
+  --bg-surface: #0a0a0a;
+  --border-main: #39FF14;
+  /* Neon Green */
+  --brand: #39FF14;
+  --accent: #FF00FF;
+  /* Neon Pink */
+  --text-primary: #39FF14;
+  --text-secondary: #FF00FF;
+  --shadow-main: 0 0 10px #39FF14, inset 0 0 5px #39FF14;
+  --radius-main: 4px;
+}
+
+/* 🌑 7. AMOLED - INFINITE BLACK */
+[data-theme='amoled'] {
+  --bg-main: #000000;
+  --bg-surface: #000000;
+  --border-main: #222222;
+  --brand: #3B82F6;
+  --accent: #06B6D4;
+  --text-primary: #FFFFFF;
+  --shadow-main: none;
+  --radius-main: 16px;
+  --border-width: 1.5px;
+}
+
+/* Global Transitions */
+* {
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease, border-radius 0.4s ease;
+}
+
+body {
+  @apply antialiased bg-bg-main text-text-primary;
+  font-family: var(--font-main);
+}
+
+/* Cyberpunk Advanced Effects */
+[data-theme='cyberpunk'] body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 200;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.97;
+  }
+
+  5% {
+    opacity: 0.95;
+  }
+
+  10% {
+    opacity: 0.9;
+  }
+
+  15% {
+    opacity: 0.95;
+  }
+
+  20% {
+    opacity: 0.98;
+  }
+
+  25% {
+    opacity: 0.95;
+  }
+
+  30% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
-/* Base styles */
-body {
-  @apply antialiased bg-bg-main text-text-primary transition-colors duration-300;
+[data-theme='cyberpunk'] .theme-card {
+  animation: flicker 0.15s infinite;
+}
+
+[data-theme='cyberpunk'] .theme-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #39FF14;
+  opacity: 0.2;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: 100%;
+  }
 }
 
 /* Smooth scroll */
@@ -79,8 +243,8 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-main);
-  border-radius: 4px;
+  background: var(--brand);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -108,4 +272,125 @@ html {
 
 .animate-pan {
   animation: pan 60s linear infinite;
+}
+
+/* Alive Component Classes */
+.theme-card {
+  background-color: var(--bg-surface);
+  border: var(--border-width) solid var(--border-main);
+  box-shadow: var(--shadow-main);
+  border-radius: var(--radius-main);
+  backdrop-filter: blur(var(--card-blur));
+  overflow: hidden;
+  position: relative;
+}
+
+.theme-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: var(--neu-inner, none);
+  pointer-events: none;
+}
+
+.theme-button {
+  background-color: var(--brand);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: var(--border-width) solid var(--border-main);
+  box-shadow: var(--shadow-main);
+  border-radius: var(--radius-main);
+  font-weight: 700;
+  cursor: pointer;
+  transform: var(--button-transform);
+}
+
+.theme-button:hover {
+  filter: brightness(1.2);
+  box-shadow: var(--shadow-hover, var(--shadow-main));
+}
+
+@keyframes liquid {
+
+  0%,
+  100% {
+    clip-path: polygon(0% 45%, 15% 44%, 32% 50%, 54% 60%, 70% 61%, 84% 59%, 100% 52%, 100% 100%, 0% 100%);
+  }
+
+  50% {
+    clip-path: polygon(0% 60%, 16% 65%, 34% 66%, 51% 62%, 67% 50%, 84% 45%, 100% 46%, 100% 100%, 0% 100%);
+  }
+}
+
+.liquid-text {
+  position: relative;
+  color: var(--text-primary);
+}
+
+.liquid-text::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--brand);
+  animation: liquid 4s ease-in-out infinite;
+}
+
+.glow-heavy {
+  filter: drop-shadow(0 0 15px var(--brand));
+}
+
+/* Alive Animations */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+[data-theme='claymorphism'] .theme-card {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Ensure the switcher wheel doesn't drift away from its button center */
+.fixed .theme-card {
+  animation: none !important;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+[data-theme='cyberpunk'] .theme-button:hover {
+  filter: brightness(1.5);
+  box-shadow: 0 0 20px #39FF14;
 }

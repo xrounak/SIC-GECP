@@ -19,6 +19,8 @@ alter table members enable row level security;
 -- Policies for members
 create policy "Enable read access for all users" on members for select using (true);
 create policy "Enable insert for authenticated users only" on members for insert with check (auth.role() = 'authenticated');
+create policy "Enable update for authenticated users only" on members for update using (auth.role() = 'authenticated');
+create policy "Enable delete for authenticated users only" on members for delete using (auth.role() = 'authenticated');
 
 --
 -- Events Table
@@ -37,6 +39,8 @@ alter table events enable row level security;
 
 create policy "Enable read access for all users" on events for select using (true);
 create policy "Enable insert for authenticated users only" on events for insert with check (auth.role() = 'authenticated');
+create policy "Enable update for authenticated users only" on events for update using (auth.role() = 'authenticated');
+create policy "Enable delete for authenticated users only" on events for delete using (auth.role() = 'authenticated');
 
 --
 -- Join Applications Table
@@ -59,6 +63,7 @@ alter table join_applications enable row level security;
 create policy "Enable insert access for all users" on join_applications for insert with check (true);
 -- Only authenticated users (admins) can view applications
 create policy "Enable read access for authenticated users only" on join_applications for select using (auth.role() = 'authenticated');
+create policy "Enable update/delete for authenticated users only" on join_applications for all using (auth.role() = 'authenticated');
 
 --
 -- Event Registrations Table
@@ -77,6 +82,7 @@ alter table event_registrations enable row level security;
 create policy "Enable insert access for all users" on event_registrations for insert with check (true);
 -- Only authenticated users can view registrations
 create policy "Enable read access for authenticated users only" on event_registrations for select using (auth.role() = 'authenticated');
+create policy "Enable delete for authenticated users only" on event_registrations for delete using (auth.role() = 'authenticated');
 
 --
 -- Gallery Table
@@ -92,6 +98,8 @@ alter table gallery enable row level security;
 
 create policy "Enable read access for all users" on gallery for select using (true);
 create policy "Enable insert for authenticated users only" on gallery for insert with check (auth.role() = 'authenticated');
+create policy "Enable update for authenticated users only" on gallery for update using (auth.role() = 'authenticated');
+create policy "Enable delete for authenticated users only" on gallery for delete using (auth.role() = 'authenticated');
 
 --
 -- Insert Dummy Data (Seed)

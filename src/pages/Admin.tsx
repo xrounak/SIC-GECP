@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../services/supabaseClient';
 import type { JoinApplication, EventRegistration } from '../types';
+import EventManager from '../components/admin/EventManager';
+import MemberManager from '../components/admin/MemberManager';
+import GalleryManager from '../components/admin/GalleryManager';
 
 export default function Admin() {
     const [applications, setApplications] = useState<JoinApplication[]>([]);
     const [registrations, setRegistrations] = useState<EventRegistration[]>([]);
     const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState<'applications' | 'registrations'>('applications');
+    const [activeTab, setActiveTab] = useState<'applications' | 'registrations' | 'events' | 'members' | 'gallery'>('applications');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -47,12 +50,12 @@ export default function Admin() {
     }, [navigate]);
 
     return (
-        <div className="bg-bg-main min-h-screen py-12">
+        <div className="bg-bg-main min-h-screen py-24 transition-colors duration-500">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between mb-8">
-                    <h1 className="text-3xl font-bold text-text-primary">Admin Dashboard</h1>
+                <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-6">
+                    <h1 className="text-3xl font-bold text-text-primary drop-shadow-sm">Admin Dashboard</h1>
                     <div className="flex items-center gap-4">
-                        <span className="px-3 py-1 bg-green-900/20 text-green-400 border border-green-500/30 rounded-full text-sm font-medium animate-pulse">
+                        <span className="px-3 py-1 bg-brand/10 text-brand border border-brand/20 rounded-full text-xs font-medium animate-pulse">
                             Live Connection
                         </span>
                         <button
@@ -60,7 +63,7 @@ export default function Admin() {
                                 await supabase.auth.signOut();
                                 navigate('/login');
                             }}
-                            className="text-sm text-text-secondary hover:text-red-400 transition-colors"
+                            className="text-sm text-text-secondary hover:text-brand transition-colors font-medium"
                         >
                             Sign Out
                         </button>
@@ -68,76 +71,108 @@ export default function Admin() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div className="bg-bg-surface p-6 rounded-xl shadow-lg border border-border-main">
-                        <h3 className="text-text-secondary text-xs font-semibold uppercase tracking-wider mb-2">Total Applications</h3>
-                        <p className="text-3xl font-bold text-brand drop-shadow-[0_0_10px_rgba(79,70,229,0.5)]">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <div className="theme-card p-6 border-l-4 border-l-brand">
+                        <h3 className="text-text-muted text-xs font-semibold uppercase tracking-wider mb-2">Total Applications</h3>
+                        <p className="text-3xl font-bold text-brand">
                             {loading ? '...' : applications.length}
                         </p>
                     </div>
-                    <div className="bg-bg-surface p-6 rounded-xl shadow-lg border border-border-main">
-                        <h3 className="text-text-secondary text-xs font-semibold uppercase tracking-wider mb-2">Total Registrations</h3>
-                        <p className="text-3xl font-bold text-accent drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
+                    <div className="theme-card p-6 border-l-4 border-l-accent">
+                        <h3 className="text-text-muted text-xs font-semibold uppercase tracking-wider mb-2">Total Registrations</h3>
+                        <p className="text-3xl font-bold text-accent">
                             {loading ? '...' : registrations.length}
                         </p>
                     </div>
                 </div>
 
                 {/* Tabs */}
-                <div className="flex space-x-1 bg-bg-surface p-1 rounded-xl border border-border-main w-fit mb-6">
+                <div className="theme-card p-1 w-fit mb-8 flex" style={{ borderRadius: 'var(--radius-main)' }}>
                     <button
                         onClick={() => setActiveTab('applications')}
-                        className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'applications'
-                            ? 'bg-brand/20 text-brand shadow-[0_0_10px_rgba(79,70,229,0.2)]'
-                            : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
+                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'applications'
+                            ? 'bg-brand text-white shadow-md'
+                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
                             }`}
+                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
                     >
                         Join Applications
                     </button>
                     <button
                         onClick={() => setActiveTab('registrations')}
-                        className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'registrations'
-                            ? 'bg-brand/20 text-brand shadow-[0_0_10px_rgba(79,70,229,0.2)]'
-                            : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
+                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'registrations'
+                            ? 'bg-brand text-white shadow-md'
+                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
                             }`}
+                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
                     >
-                        Event Registrations
+                        Registrations
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('events')}
+                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'events'
+                            ? 'bg-brand text-white shadow-md'
+                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
+                            }`}
+                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
+                    >
+                        Events
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('members')}
+                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'members'
+                            ? 'bg-brand text-white shadow-md'
+                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
+                            }`}
+                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
+                    >
+                        Members
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('gallery')}
+                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'gallery'
+                            ? 'bg-brand text-white shadow-md'
+                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
+                            }`}
+                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
+                    >
+                        Gallery
                     </button>
                 </div>
 
                 {/* Tables Container */}
-                <div className="bg-bg-surface rounded-xl shadow-lg border border-border-main overflow-hidden mb-8">
+                <div className="theme-card overflow-hidden mb-12">
                     {loading ? (
-                        <div className="flex justify-center items-center py-12">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand shadow-[0_0_15px_rgba(79,70,229,0.5)]"></div>
+                        <div className="flex justify-center items-center py-16">
+                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand"></div>
                         </div>
                     ) : (
-                        <>
+                        <div className="p-1">
                             {activeTab === 'applications' && (
                                 <div>
-                                    <div className="px-6 py-4 border-b border-border-main flex justify-between items-center bg-bg-main/30">
-                                        <h3 className="font-semibold text-text-primary">Recent Applications</h3>
-                                        <span className="text-xs text-text-muted">Live Data</span>
+                                    <div className="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-white/5">
+                                        <h3 className="font-bold text-text-primary">Recent Applications</h3>
+                                        <span className="text-xs text-brand font-medium tracking-widest uppercase">Live Data</span>
                                     </div>
                                     {applications.length > 0 ? (
                                         <div className="overflow-x-auto">
                                             <table className="w-full text-sm text-left">
-                                                <thead className="bg-bg-main text-text-secondary font-medium border-b border-border-main">
+                                                <thead className="bg-bg-main/50 text-text-primary font-bold border-b border-border-main">
                                                     <tr>
-                                                        <th className="px-6 py-3">Date</th>
-                                                        <th className="px-6 py-3">Name</th>
-                                                        <th className="px-6 py-3">Branch / Year</th>
-                                                        <th className="px-6 py-3">Email</th>
-                                                        <th className="px-6 py-3">Skills</th>
+                                                        <th className="px-6 py-4">Date</th>
+                                                        <th className="px-6 py-4">Name</th>
+                                                        <th className="px-6 py-4">Branch / Year</th>
+                                                        <th className="px-6 py-4">Email</th>
+                                                        <th className="px-6 py-4">Skills</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y divide-border-main">
+                                                <tbody className="divide-y divide-white/5">
                                                     {applications.map((app) => (
-                                                        <tr key={app.id} className="hover:bg-bg-main/50 transition-colors">
+                                                        <tr key={app.id} className="hover:bg-white/5 transition-colors">
                                                             <td className="px-6 py-4 text-text-muted">
                                                                 {new Date(app.created_at).toLocaleDateString()}
                                                             </td>
-                                                            <td className="px-6 py-4 font-medium text-text-primary">{app.name}</td>
+                                                            <td className="px-6 py-4 font-bold text-text-primary">{app.name}</td>
                                                             <td className="px-6 py-4 text-text-secondary">{app.branch} - {app.year}</td>
                                                             <td className="px-6 py-4 text-text-secondary">{app.email}</td>
                                                             <td className="px-6 py-4 text-text-secondary max-w-xs truncate" title={app.skills}>
@@ -149,48 +184,52 @@ export default function Admin() {
                                             </table>
                                         </div>
                                     ) : (
-                                        <div className="p-12 text-center text-text-muted italic">No applications found.</div>
+                                        <div className="p-16 text-center text-text-muted italic">No applications found.</div>
                                     )}
                                 </div>
                             )}
 
                             {activeTab === 'registrations' && (
                                 <div>
-                                    <div className="px-6 py-4 border-b border-border-main flex justify-between items-center bg-bg-main/30">
-                                        <h3 className="font-semibold text-text-primary">Event Registrations</h3>
-                                        <span className="text-xs text-text-muted">Live Data</span>
+                                    <div className="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-white/5">
+                                        <h3 className="font-bold text-text-primary">Event Registrations</h3>
+                                        <span className="text-xs text-brand font-medium tracking-widest uppercase">Live Data</span>
                                     </div>
                                     {registrations.length > 0 ? (
                                         <div className="overflow-x-auto">
                                             <table className="w-full text-sm text-left">
-                                                <thead className="bg-bg-main text-text-secondary font-medium border-b border-border-main">
+                                                <thead className="bg-bg-main/50 text-text-primary font-bold border-b border-border-main">
                                                     <tr>
-                                                        <th className="px-6 py-3">Event</th>
-                                                        <th className="px-6 py-3">Name</th>
-                                                        <th className="px-6 py-3">Email</th>
-                                                        <th className="px-6 py-3">ID</th>
+                                                        <th className="px-6 py-4">Event</th>
+                                                        <th className="px-6 py-4">Name</th>
+                                                        <th className="px-6 py-4">Email</th>
+                                                        <th className="px-6 py-4">ID</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="divide-y divide-border-main">
+                                                <tbody className="divide-y divide-white/5">
                                                     {registrations.map((reg: any) => (
-                                                        <tr key={reg.id} className="hover:bg-bg-main/50 transition-colors">
-                                                            <td className="px-6 py-4 font-medium text-text-primary">
+                                                        <tr key={reg.id} className="hover:bg-white/5 transition-colors">
+                                                            <td className="px-6 py-4 font-bold text-text-primary">
                                                                 {reg.events?.title || 'Unknown Event'}
                                                             </td>
                                                             <td className="px-6 py-4 text-text-secondary">{reg.name}</td>
                                                             <td className="px-6 py-4 text-text-secondary">{reg.email}</td>
-                                                            <td className="px-6 py-4 text-text-muted text-xs font-mono">{reg.id.slice(0, 8)}...</td>
+                                                            <td className="px-6 py-4 text-text-muted text-xs font-mono">{reg.id.slice(0, 8)}</td>
                                                         </tr>
                                                     ))}
                                                 </tbody>
                                             </table>
                                         </div>
                                     ) : (
-                                        <div className="p-12 text-center text-text-muted italic">No registrations found.</div>
+                                        <div className="p-16 text-center text-text-muted italic">No registrations found.</div>
                                     )}
                                 </div>
                             )}
-                        </>
+
+                            {activeTab === 'events' && <div className="p-6"><EventManager /></div>}
+                            {activeTab === 'members' && <div className="p-6"><MemberManager /></div>}
+                            {activeTab === 'gallery' && <div className="p-6"><GalleryManager /></div>}
+                        </div>
                     )}
                 </div>
             </div>

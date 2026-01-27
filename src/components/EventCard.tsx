@@ -50,13 +50,13 @@ export default function EventCard({ event }: EventCardProps) {
     };
 
     return (
-        <div className="bg-bg-surface rounded-2xl shadow-lg hover:shadow-[0_0_20px_rgba(79,70,229,0.15)] transition-all duration-300 overflow-hidden border border-border-main flex flex-col h-full group">
+        <div className="theme-card transition-all duration-300 overflow-hidden flex flex-col h-full group">
             <div className={`h-1 ${isUpcoming ? 'bg-gradient-to-r from-brand to-accent' : 'bg-text-muted/20'}`} />
             <div className="p-6 flex-grow flex flex-col">
                 <div className="flex items-start justify-between mb-4">
                     <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${isUpcoming
-                            ? 'bg-brand/10 text-brand border-brand/20 shadow-[0_0_10px_rgba(79,70,229,0.2)]'
-                            : 'bg-text-muted/10 text-text-muted border-text-muted/20'
+                        ? 'bg-brand/10 text-brand border-brand/20'
+                        : 'bg-text-muted/10 text-text-muted border-text-muted/20'
                         }`}>
                         {isUpcoming ? 'Upcoming' : 'Past'}
                     </span>
@@ -89,7 +89,7 @@ export default function EventCard({ event }: EventCardProps) {
                         {!isExpanding && status === 'idle' && (
                             <button
                                 onClick={() => setIsExpanding(true)}
-                                className="w-full py-2 px-4 bg-brand/10 text-brand rounded-lg hover:bg-brand hover:text-white font-medium transition-all text-sm shadow-[0_0_10px_rgba(79,70,229,0.1)] hover:shadow-[0_0_15px_rgba(79,70,229,0.4)]"
+                                className="theme-button w-full py-2 px-4 font-medium transition-all text-sm"
                             >
                                 Register Now
                             </button>
@@ -101,7 +101,8 @@ export default function EventCard({ event }: EventCardProps) {
                                     type="text"
                                     placeholder="Your Name"
                                     required
-                                    className="w-full px-3 py-2 text-sm bg-bg-main border border-border-main text-text-primary rounded-lg focus:ring-2 focus:ring-brand focus:border-brand placeholder-text-muted"
+                                    className="theme-card w-full px-3 py-2 text-sm bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand placeholder-text-muted"
+                                    style={{ borderRadius: 'var(--radius-main)' }}
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
                                 />
@@ -109,7 +110,8 @@ export default function EventCard({ event }: EventCardProps) {
                                     type="email"
                                     placeholder="Email Address"
                                     required
-                                    className="w-full px-3 py-2 text-sm bg-bg-main border border-border-main text-text-primary rounded-lg focus:ring-2 focus:ring-brand focus:border-brand placeholder-text-muted"
+                                    className="theme-card w-full px-3 py-2 text-sm bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand placeholder-text-muted"
+                                    style={{ borderRadius: 'var(--radius-main)' }}
                                     value={formData.email}
                                     onChange={e => setFormData({ ...formData, email: e.target.value })}
                                 />
@@ -117,13 +119,13 @@ export default function EventCard({ event }: EventCardProps) {
                                     <button
                                         type="button"
                                         onClick={() => setIsExpanding(false)}
-                                        className="flex-1 py-2 text-sm text-text-muted hover:text-text-primary font-medium"
+                                        className="flex-1 py-2 text-sm text-text-muted hover:text-text-primary font-medium transition-colors"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
-                                        className="flex-1 py-2 text-sm bg-brand text-white rounded-lg hover:bg-brand-hover font-medium shadow-[0_0_10px_rgba(79,70,229,0.3)]"
+                                        className="theme-button flex-1 py-2 text-sm font-medium"
                                     >
                                         Confirm
                                     </button>

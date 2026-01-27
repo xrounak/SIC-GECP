@@ -8,10 +8,11 @@ import Gallery from './pages/Gallery';
 import Join from './pages/Join';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
+import ThemeSwitcher from './components/ThemeSwitcher';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-bg-main transition-colors duration-500">
       <Navbar />
       <main className="flex-grow">
         <Routes>
@@ -25,6 +26,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <ThemeSwitcher />
     </div>
   );
 }

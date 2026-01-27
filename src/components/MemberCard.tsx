@@ -6,12 +6,13 @@ interface MemberCardProps {
 
 export default function MemberCard({ member }: MemberCardProps) {
     return (
-        <div className="group relative bg-bg-surface rounded-2xl shadow-lg border border-border-main hover:border-brand/50 transition-all duration-300 overflow-hidden hover:shadow-[0_0_20px_rgba(79,70,229,0.2)]">
+        <div className="theme-card group relative transition-all duration-300 overflow-hidden">
             <div className="aspect-square overflow-hidden relative">
                 <img
                     src={member.image_url || 'https://via.placeholder.com/300x300?text=Member'}
                     alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale group-hover:grayscale-0"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter grayscale group-hover:grayscale-0 shadow-inner"
+                    style={{ borderRadius: 'var(--radius-main)' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-bg-surface via-transparent to-transparent opacity-80" />
             </div>

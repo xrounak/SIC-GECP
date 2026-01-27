@@ -31,10 +31,10 @@ export default function Members() {
     }, []);
 
     return (
-        <div className="bg-bg-main min-h-screen py-12">
+        <div className="bg-bg-main min-h-screen py-24 transition-colors duration-500">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-brand via-accent to-brand-hover drop-shadow-[0_0_10px_rgba(79,70,229,0.3)]">
+                    <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-brand via-accent to-brand-hover drop-shadow-sm">
                         Our Team
                     </h1>
                     <p className="text-text-muted max-w-2xl mx-auto text-lg leading-relaxed">
@@ -44,7 +44,7 @@ export default function Members() {
 
                 {loading ? (
                     <div className="flex justify-center items-center py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand shadow-[0_0_15px_rgba(79,70,229,0.5)]"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand"></div>
                     </div>
                 ) : members.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
