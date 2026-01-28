@@ -19,7 +19,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [theme, setThemeState] = useState<ThemeDesign>(() => {
         const saved = localStorage.getItem('sic-theme');
-        return (saved as ThemeDesign) || 'glassmorphism';
+        return (saved as ThemeDesign) || 'amoled';
     });
 
     const setTheme = (newTheme: ThemeDesign) => {

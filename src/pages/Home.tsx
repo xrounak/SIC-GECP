@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import IntroScreen from '../components/IntroScreen';
+import IntroScreen from '../components/IntroScreen3';
 import EventCard from '../components/EventCard';
 import { supabase } from '../services/supabaseClient';
 import type { Event } from '../types';
