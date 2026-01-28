@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { supabase } from '../services/supabaseClient';
 import MemberCard from '../components/MemberCard';
 import type { Member } from '../types';
@@ -32,6 +33,13 @@ export default function Members() {
 
     return (
         <div className="bg-bg-main min-h-screen py-24 transition-colors duration-500">
+            <Helmet>
+                <title>Team & Leadership | SIC GEC Palamu</title>
+                <meta
+                    name="description"
+                    content="Meet the creative minds, innovators, and leadership team behind the Science and Innovation Club at Government Engineering College Palamu."
+                />
+            </Helmet>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-brand via-accent to-brand-hover drop-shadow-sm">

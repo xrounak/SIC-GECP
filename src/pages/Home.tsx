@@ -54,10 +54,10 @@ export default function Home() {
             </AnimatePresence>
 
             <Helmet>
-                <title>SIC GEC Palamu | Student Innovation Cell</title>
+                <title>SIC GEC Palamu | Science and Innovation Club</title>
                 <meta
                     name="description"
-                    content="Student Innovation Cell of Government Engineering College Palamu. Promoting innovation, startups, and technical growth."
+                    content="Science and Innovation Club of Government Engineering College Palamu. Promoting innovation, startups, and technical growth."
                 />
             </Helmet>
 
@@ -81,7 +81,7 @@ export default function Home() {
 
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-brand via-accent to-brand-hover drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                        Student Innovation Cell – GEC Patan
+                        Science and Innovation Club – GEC Palamu
                     </h1>
                     <p className="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed font-light drop-shadow-md">
                         Where ideas come to life. <span className="text-accent font-medium">Innovate</span>, <span className="text-brand font-medium">Build</span>, and <span className="text-accent-soft font-medium">Deploy</span> the future.

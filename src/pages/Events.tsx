@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { supabase } from '../services/supabaseClient';
 import EventCard from '../components/EventCard';
 import type { Event } from '../types';
@@ -35,6 +36,13 @@ export default function Events() {
 
     return (
         <div className="bg-bg-main min-h-screen py-24 transition-colors duration-500">
+            <Helmet>
+                <title>Upcoming Events & Workshops | SIC GEC Palamu</title>
+                <meta
+                    name="description"
+                    content="Stay updated with the latest tech events, workshops, hackathons, and seminars organized by the Science and Innovation Club at GEC Palamu."
+                />
+            </Helmet>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-accent via-brand to-accent drop-shadow-sm">

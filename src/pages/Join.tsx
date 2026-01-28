@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { supabase } from '../services/supabaseClient';
 import { sendTelegramNotification } from '../utils/telegram';
 
@@ -70,6 +71,13 @@ export default function Join() {
 
     return (
         <div className="bg-bg-main min-h-screen py-24 relative overflow-hidden transition-colors duration-500">
+            <Helmet>
+                <title>Join the Club | Become a Member of SIC GEC Palamu</title>
+                <meta
+                    name="description"
+                    content="Ready to innovate? Apply to join the Science and Innovation Club at GEC Palamu and be part of a community that builds the future."
+                />
+            </Helmet>
             {/* Background Ambient Glow */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
