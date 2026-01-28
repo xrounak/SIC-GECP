@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import IntroScreen from '../components/IntroScreen3';
 import EventCard from '../components/EventCard';
 import { supabase } from '../services/supabaseClient';
@@ -52,6 +53,14 @@ export default function Home() {
                 {showIntro && <IntroScreen onComplete={handleIntroComplete} />}
             </AnimatePresence>
 
+            <Helmet>
+                <title>SIC GEC Palamu | Student Innovation Cell</title>
+                <meta
+                    name="description"
+                    content="Student Innovation Cell of Government Engineering College Palamu. Promoting innovation, startups, and technical growth."
+                />
+            </Helmet>
+
             {/* Hero Section */}
             <section className="relative bg-bg-main text-text-primary py-24 sm:py-32 overflow-hidden">
                 {/* Background Effects */}
@@ -72,7 +81,7 @@ export default function Home() {
 
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-brand via-accent to-brand-hover drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                        Science and Innovation Club
+                        Student Innovation Cell – GEC Patan
                     </h1>
                     <p className="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed font-light drop-shadow-md">
                         Where ideas come to life. <span className="text-accent font-medium">Innovate</span>, <span className="text-brand font-medium">Build</span>, and <span className="text-accent-soft font-medium">Deploy</span> the future.

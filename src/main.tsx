@@ -5,12 +5,16 @@ import { ThemeProvider } from './context/ThemeContext'
 import './index.css'
 import App from './App.tsx'
 
+import { HelmetProvider } from 'react-helmet-async'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   </StrictMode>,
 )
