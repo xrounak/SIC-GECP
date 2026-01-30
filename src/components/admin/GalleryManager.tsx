@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../services/supabaseClient';
-import { Trash2, Edit2, Plus, X } from 'lucide-react';
+import { Trash2, Edit2, Plus } from 'lucide-react';
 import type { GalleryImage } from '../../types';
+
+import AdminModal from './AdminModal';
 
 export default function GalleryManager() {
     const [images, setImages] = useState<GalleryImage[]>([]);
     const [loading, setLoading] = useState(true);
-    const [isAdding, setIsAdding] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingImage, setEditingImage] = useState<GalleryImage | null>(null);
 
     const [formData, setFormData] = useState({
@@ -17,6 +19,16 @@ export default function GalleryManager() {
     useEffect(() => {
         fetchImages();
     }, []);
+
+    const resetForm = () => {
+        setFormData({ image_url: '', caption: '' });
+        setEditingImage(null);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        resetForm();
+    };
 
     async function fetchImages() {
         setLoading(true);
@@ -42,7 +54,7 @@ export default function GalleryManager() {
 
             if (error) alert('Error updating image');
             else {
-                setEditingImage(null);
+                handleCloseModal();
                 fetchImages();
             }
         } else {
@@ -52,8 +64,7 @@ export default function GalleryManager() {
 
             if (error) alert('Error adding image');
             else {
-                setIsAdding(false);
-                setFormData({ image_url: '', caption: '' });
+                handleCloseModal();
                 fetchImages();
             }
         }
@@ -77,64 +88,75 @@ export default function GalleryManager() {
             image_url: img.image_url,
             caption: img.caption || ''
         });
-        setIsAdding(true);
+        setIsModalOpen(true);
     };
 
     return (
         <div className="space-y-8">
-            <div className="flex justify-between items-center">
-                <h3 className="text-xl font-bold text-text-primary">Manage Gallery</h3>
+            <div className="flex justify-between items-center bg-bg-surface/30 p-4 rounded-2xl border border-border-main backdrop-blur-sm">
+                <div>
+                    <h3 className="text-xl font-bold text-text-primary">Manage Gallery</h3>
+                    <p className="text-xs text-text-muted mt-1">Upload and manage club highlights</p>
+                </div>
                 <button
                     onClick={() => {
-                        setIsAdding(!isAdding);
-                        setEditingImage(null);
-                        setFormData({ image_url: '', caption: '' });
+                        resetForm();
+                        setIsModalOpen(true);
                     }}
-                    className="theme-button flex items-center gap-2 py-2"
+                    className="theme-button flex items-center gap-2 py-2.5 px-6 shadow-lg shadow-brand/10"
                 >
-                    {isAdding ? <X size={18} /> : <Plus size={18} />}
-                    {isAdding ? 'Cancel' : 'Add Image'}
+                    <Plus size={18} />
+                    <span>Add Image</span>
                 </button>
             </div>
 
-            {isAdding && (
-                <div className="theme-card p-6 animate-in slide-in-from-top duration-300">
-                    <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
-                        <div>
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Image URL</label>
-                            <input
-                                required
-                                value={formData.image_url}
-                                onChange={e => setFormData({ ...formData, image_url: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                                placeholder="https://..."
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Caption</label>
-                            <input
-                                value={formData.caption}
-                                onChange={e => setFormData({ ...formData, caption: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                                placeholder="What's happening in this photo?"
-                            />
-                        </div>
+            <AdminModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title={editingImage ? 'Edit Gallery Entry' : 'Add to Gallery'}
+            >
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Image URL</label>
+                        <input
+                            required
+                            placeholder="https://images.unsplash.com/..."
+                            value={formData.image_url}
+                            onChange={e => setFormData({ ...formData, image_url: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Caption</label>
+                        <input
+                            placeholder="e.g. Workshop on IoT and AI"
+                            value={formData.caption}
+                            onChange={e => setFormData({ ...formData, caption: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all"
+                        />
+                    </div>
 
-                        {formData.image_url && (
-                            <div className="border border-border-main rounded-lg overflow-hidden max-w-sm">
-                                <p className="bg-bg-main px-4 py-1 text-[10px] font-black uppercase text-text-muted border-b border-border-main tracking-widest">Preview</p>
-                                <img src={formData.image_url} alt="Preview" className="w-full h-48 object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                    {formData.image_url && (
+                        <div className="space-y-2">
+                            <p className="text-[10px] uppercase tracking-widest text-text-muted ml-1">Image Preview</p>
+                            <div className="border border-border-main rounded-2xl overflow-hidden shadow-2xl">
+                                <img
+                                    src={formData.image_url}
+                                    alt="Preview"
+                                    className="w-full h-64 object-cover"
+                                    onError={(e) => (e.currentTarget.style.display = 'none')}
+                                />
                             </div>
-                        )}
-
-                        <div className="flex justify-end">
-                            <button type="submit" className="theme-button px-12">
-                                {editingImage ? 'Update Entry' : 'Add to Gallery'}
-                            </button>
                         </div>
-                    </form>
-                </div>
-            )}
+                    )}
+
+                    <div className="flex justify-end pt-2">
+                        <button type="submit" className="theme-button w-full sm:w-auto px-12 py-3 font-bold shadow-xl shadow-brand/20">
+                            {editingImage ? 'Update Entry' : 'Add to Gallery'}
+                        </button>
+                    </div>
+                </form>
+            </AdminModal>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {loading ? (

@@ -95,57 +95,59 @@ export default function Admin() {
                 </div>
 
                 {/* Tabs */}
-                <div className="theme-card p-1 w-fit mb-8 flex" style={{ borderRadius: 'var(--radius-main)' }}>
-                    <button
-                        onClick={() => setActiveTab('applications')}
-                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'applications'
-                            ? 'bg-brand text-white shadow-md'
-                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
-                            }`}
-                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
-                    >
-                        Join Applications
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('registrations')}
-                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'registrations'
-                            ? 'bg-brand text-white shadow-md'
-                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
-                            }`}
-                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
-                    >
-                        Registrations
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('events')}
-                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'events'
-                            ? 'bg-brand text-white shadow-md'
-                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
-                            }`}
-                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
-                    >
-                        Events
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('members')}
-                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'members'
-                            ? 'bg-brand text-white shadow-md'
-                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
-                            }`}
-                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
-                    >
-                        Members
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('gallery')}
-                        className={`px-6 py-2 text-sm font-bold transition-all ${activeTab === 'gallery'
-                            ? 'bg-brand text-white shadow-md'
-                            : 'text-text-secondary hover:text-brand hover:bg-brand/5'
-                            }`}
-                        style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
-                    >
-                        Gallery
-                    </button>
+                <div className="mb-8 overflow-x-auto custom-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+                    <div className="theme-card p-1 w-max flex gap-1" style={{ borderRadius: 'var(--radius-main)' }}>
+                        <button
+                            onClick={() => setActiveTab('applications')}
+                            className={`px-4 sm:px-6 py-2 text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'applications'
+                                ? 'bg-brand text-white shadow-md'
+                                : 'text-text-secondary hover:text-brand hover:bg-brand/5'
+                                }`}
+                            style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
+                        >
+                            Applications
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('registrations')}
+                            className={`px-4 sm:px-6 py-2 text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'registrations'
+                                ? 'bg-brand text-white shadow-md'
+                                : 'text-text-secondary hover:text-brand hover:bg-brand/5'
+                                }`}
+                            style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
+                        >
+                            Registrations
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('events')}
+                            className={`px-4 sm:px-6 py-2 text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'events'
+                                ? 'bg-brand text-white shadow-md'
+                                : 'text-text-secondary hover:text-brand hover:bg-brand/5'
+                                }`}
+                            style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
+                        >
+                            Events
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('members')}
+                            className={`px-4 sm:px-6 py-2 text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'members'
+                                ? 'bg-brand text-white shadow-md'
+                                : 'text-text-secondary hover:text-brand hover:bg-brand/5'
+                                }`}
+                            style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
+                        >
+                            Members
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('gallery')}
+                            className={`px-4 sm:px-6 py-2 text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeTab === 'gallery'
+                                ? 'bg-brand text-white shadow-md'
+                                : 'text-text-secondary hover:text-brand hover:bg-brand/5'
+                                }`}
+                            style={{ borderRadius: 'calc(var(--radius-main) - 4px)' }}
+                        >
+                            Gallery
+                        </button>
+                    </div>
                 </div>
 
                 {/* Tables Container */}
@@ -163,27 +165,27 @@ export default function Admin() {
                                         <span className="text-xs text-brand font-medium tracking-widest uppercase">Live Data</span>
                                     </div>
                                     {applications.length > 0 ? (
-                                        <div className="overflow-x-auto">
-                                            <table className="w-full text-sm text-left">
+                                        <div className="overflow-x-auto custom-scrollbar">
+                                            <table className="w-full text-xs sm:text-sm text-left whitespace-nowrap sm:whitespace-normal">
                                                 <thead className="bg-bg-main/50 text-text-primary font-bold border-b border-border-main">
                                                     <tr>
-                                                        <th className="px-6 py-4">Date</th>
-                                                        <th className="px-6 py-4">Name</th>
-                                                        <th className="px-6 py-4">Branch / Year</th>
-                                                        <th className="px-6 py-4">Email</th>
-                                                        <th className="px-6 py-4">Skills</th>
+                                                        <th className="px-3 sm:px-6 py-4">Date</th>
+                                                        <th className="px-3 sm:px-6 py-4">Name</th>
+                                                        <th className="px-3 sm:px-6 py-4">Branch / Year</th>
+                                                        <th className="px-3 sm:px-6 py-4">Email</th>
+                                                        <th className="px-3 sm:px-6 py-4">Skills</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody className="divide-y divide-white/5">
                                                     {applications.map((app) => (
                                                         <tr key={app.id} className="hover:bg-white/5 transition-colors">
-                                                            <td className="px-6 py-4 text-text-muted">
+                                                            <td className="px-3 sm:px-6 py-4 text-text-muted">
                                                                 {new Date(app.created_at).toLocaleDateString()}
                                                             </td>
-                                                            <td className="px-6 py-4 font-bold text-text-primary">{app.name}</td>
-                                                            <td className="px-6 py-4 text-text-secondary">{app.branch} - {app.year}</td>
-                                                            <td className="px-6 py-4 text-text-secondary">{app.email}</td>
-                                                            <td className="px-6 py-4 text-text-secondary max-w-xs truncate" title={app.skills}>
+                                                            <td className="px-3 sm:px-6 py-4 font-bold text-text-primary">{app.name}</td>
+                                                            <td className="px-3 sm:px-6 py-4 text-text-secondary">{app.branch} - {app.year}</td>
+                                                            <td className="px-3 sm:px-6 py-4 text-text-secondary font-mono text-[10px] sm:text-xs">{app.email}</td>
+                                                            <td className="px-3 sm:px-6 py-4 text-text-secondary max-w-xs truncate" title={app.skills}>
                                                                 {app.skills}
                                                             </td>
                                                         </tr>
@@ -204,11 +206,11 @@ export default function Admin() {
                                         <span className="text-xs text-brand font-medium tracking-widest uppercase">Live Data</span>
                                     </div>
                                     {registrations.length > 0 ? (
-                                        <div className="overflow-x-auto">
-                                            <table className="w-full text-sm text-left">
+                                        <div className="overflow-x-auto custom-scrollbar">
+                                            <table className="w-full text-xs sm:text-sm text-left whitespace-nowrap sm:whitespace-normal">
                                                 <thead className="bg-bg-main/50 text-text-primary font-bold border-b border-border-main">
                                                     <tr>
-                                                        <th className="px-6 py-4">Event</th>
+                                                        <th className="px-3 sm:px-6 py-4">Event</th>
                                                         <th className="px-6 py-4">Name</th>
                                                         <th className="px-6 py-4">Email</th>
                                                         <th className="px-6 py-4">ID</th>
@@ -217,12 +219,12 @@ export default function Admin() {
                                                 <tbody className="divide-y divide-white/5">
                                                     {registrations.map((reg: any) => (
                                                         <tr key={reg.id} className="hover:bg-white/5 transition-colors">
-                                                            <td className="px-6 py-4 font-bold text-text-primary">
+                                                            <td className="px-3 sm:px-6 py-4 font-bold text-text-primary">
                                                                 {reg.events?.title || 'Unknown Event'}
                                                             </td>
-                                                            <td className="px-6 py-4 text-text-secondary">{reg.name}</td>
-                                                            <td className="px-6 py-4 text-text-secondary">{reg.email}</td>
-                                                            <td className="px-6 py-4 text-text-muted text-xs font-mono">{reg.id.slice(0, 8)}</td>
+                                                            <td className="px-3 sm:px-6 py-4 text-text-secondary">{reg.name}</td>
+                                                            <td className="px-3 sm:px-6 py-4 text-text-secondary font-mono text-[10px] sm:text-xs">{reg.email}</td>
+                                                            <td className="px-3 sm:px-6 py-4 text-text-muted text-[10px] font-mono">{reg.id.slice(0, 8)}</td>
                                                         </tr>
                                                     ))}
                                                 </tbody>

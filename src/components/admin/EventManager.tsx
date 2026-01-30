@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../services/supabaseClient';
-import { Calendar, MapPin, Trash2, Edit2, Plus, X } from 'lucide-react';
+import { Calendar, MapPin, Trash2, Edit2, Plus } from 'lucide-react';
 import type { Event } from '../../types';
+
+import AdminModal from './AdminModal';
 
 export default function EventManager() {
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
-    const [isAdding, setIsAdding] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingEvent, setEditingEvent] = useState<Event | null>(null);
 
     const [formData, setFormData] = useState({
@@ -17,9 +19,26 @@ export default function EventManager() {
         status: 'upcoming' as 'upcoming' | 'past'
     });
 
+    // Helper to convert Date to local datetime-local string (YYYY-MM-DDTHH:mm)
+    const toLocalISOString = (date: Date) => {
+        const offset = date.getTimezoneOffset();
+        const localDate = new Date(date.getTime() - offset * 60 * 1000);
+        return localDate.toISOString().slice(0, 16);
+    };
+
     useEffect(() => {
         fetchEvents();
     }, []);
+
+    const resetForm = () => {
+        setFormData({ title: '', description: '', date: '', venue: '', status: 'upcoming' });
+        setEditingEvent(null);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        resetForm();
+    };
 
     async function fetchEvents() {
         setLoading(true);
@@ -45,7 +64,7 @@ export default function EventManager() {
 
             if (error) alert('Error updating event');
             else {
-                setEditingEvent(null);
+                handleCloseModal();
                 fetchEvents();
             }
         } else {
@@ -55,8 +74,7 @@ export default function EventManager() {
 
             if (error) alert('Error adding event');
             else {
-                setIsAdding(false);
-                setFormData({ title: '', description: '', date: '', venue: '', status: 'upcoming' });
+                handleCloseModal();
                 fetchEvents();
             }
         }
@@ -79,88 +97,95 @@ export default function EventManager() {
         setFormData({
             title: event.title,
             description: event.description || '',
-            date: new Date(event.date).toISOString().slice(0, 16),
+            date: toLocalISOString(new Date(event.date)),
             venue: event.venue,
             status: event.status
         });
-        setIsAdding(true);
+        setIsModalOpen(true);
     };
 
     return (
         <div className="space-y-8">
-            <div className="flex justify-between items-center">
-                <h3 className="text-xl font-bold text-text-primary">Manage Events</h3>
+            <div className="flex justify-between items-center bg-bg-surface/30 p-4 rounded-2xl border border-border-main backdrop-blur-sm">
+                <div>
+                    <h3 className="text-xl font-bold text-text-primary">Manage Events</h3>
+                    <p className="text-xs text-text-muted mt-1">Add, update or remove club events</p>
+                </div>
                 <button
                     onClick={() => {
-                        setIsAdding(!isAdding);
-                        setEditingEvent(null);
-                        setFormData({ title: '', description: '', date: '', venue: '', status: 'upcoming' });
+                        resetForm();
+                        setIsModalOpen(true);
                     }}
-                    className="theme-button flex items-center gap-2 py-2"
+                    className="theme-button flex items-center gap-2 py-2.5 px-6 shadow-lg shadow-brand/10"
                 >
-                    {isAdding ? <X size={18} /> : <Plus size={18} />}
-                    {isAdding ? 'Cancel' : 'Add Event'}
+                    <Plus size={18} />
+                    <span>Add Event</span>
                 </button>
             </div>
 
-            {isAdding && (
-                <div className="theme-card p-6 animate-in slide-in-from-top duration-300">
-                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="col-span-2">
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Event Title</label>
-                            <input
-                                required
-                                value={formData.title}
-                                onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                            />
-                        </div>
-                        <div className="col-span-2">
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Description</label>
-                            <textarea
-                                value={formData.description}
-                                onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors h-24"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Date & Time</label>
-                            <input
-                                required
-                                type="datetime-local"
-                                value={formData.date}
-                                onChange={e => setFormData({ ...formData, date: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Venue</label>
-                            <input
-                                required
-                                value={formData.venue}
-                                onChange={e => setFormData({ ...formData, venue: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Status</label>
-                            <select
-                                value={formData.status}
-                                onChange={e => setFormData({ ...formData, status: e.target.value as any })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                            >
-                                <option value="upcoming">Upcoming</option>
-                                <option value="past">Past</option>
-                            </select>
-                        </div>
-                        <div className="md:col-span-2 flex justify-end">
-                            <button type="submit" className="theme-button px-12">
-                                {editingEvent ? 'Update Event' : 'Create Event'}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            )}
+            <AdminModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title={editingEvent ? 'Edit Event' : 'Create New Event'}
+            >
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="col-span-2 space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Event Title</label>
+                        <input
+                            required
+                            placeholder="e.g. Annual Tech Symposium"
+                            value={formData.title}
+                            onChange={e => setFormData({ ...formData, title: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand focus:ring-1 focus:ring-brand transition-all"
+                        />
+                    </div>
+                    <div className="col-span-2 space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Description</label>
+                        <textarea
+                            placeholder="Tell everyone what this event is about..."
+                            value={formData.description}
+                            onChange={e => setFormData({ ...formData, description: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand focus:ring-1 focus:ring-brand transition-all h-32"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Date & Time</label>
+                        <input
+                            required
+                            type="datetime-local"
+                            value={formData.date}
+                            onChange={e => setFormData({ ...formData, date: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand focus:ring-1 focus:ring-brand transition-all [color-scheme:dark]"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Venue</label>
+                        <input
+                            required
+                            placeholder="e.g. Main Auditorium"
+                            value={formData.venue}
+                            onChange={e => setFormData({ ...formData, venue: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand focus:ring-1 focus:ring-brand transition-all"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Status</label>
+                        <select
+                            value={formData.status}
+                            onChange={e => setFormData({ ...formData, status: e.target.value as any })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand focus:ring-1 focus:ring-brand transition-all cursor-pointer"
+                        >
+                            <option value="upcoming">Upcoming</option>
+                            <option value="past">Past</option>
+                        </select>
+                    </div>
+                    <div className="md:col-span-2 flex justify-end pt-2">
+                        <button type="submit" className="theme-button w-full sm:w-auto px-12 py-3 font-bold shadow-xl shadow-brand/20">
+                            {editingEvent ? 'Save Changes' : 'Create Event'}
+                        </button>
+                    </div>
+                </form>
+            </AdminModal>
 
             <div className="grid grid-cols-1 gap-4">
                 {loading ? (

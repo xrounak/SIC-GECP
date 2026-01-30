@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../services/supabaseClient';
-import { Trash2, Edit2, Plus, X, User } from 'lucide-react';
+import { Trash2, Edit2, Plus, User } from 'lucide-react';
 import type { Member } from '../../types';
+
+import AdminModal from './AdminModal';
 
 export default function MemberManager() {
     const [members, setMembers] = useState<Member[]>([]);
     const [loading, setLoading] = useState(true);
-    const [isAdding, setIsAdding] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingMember, setEditingMember] = useState<Member | null>(null);
 
     const [formData, setFormData] = useState({
@@ -19,6 +21,16 @@ export default function MemberManager() {
     useEffect(() => {
         fetchMembers();
     }, []);
+
+    const resetForm = () => {
+        setFormData({ name: '', role: '', domain: '', image_url: '' });
+        setEditingMember(null);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        resetForm();
+    };
 
     async function fetchMembers() {
         setLoading(true);
@@ -44,7 +56,7 @@ export default function MemberManager() {
 
             if (error) alert('Error updating member');
             else {
-                setEditingMember(null);
+                handleCloseModal();
                 fetchMembers();
             }
         } else {
@@ -54,8 +66,7 @@ export default function MemberManager() {
 
             if (error) alert('Error adding member');
             else {
-                setIsAdding(false);
-                setFormData({ name: '', role: '', domain: '', image_url: '' });
+                handleCloseModal();
                 fetchMembers();
             }
         }
@@ -81,73 +92,88 @@ export default function MemberManager() {
             domain: member.domain,
             image_url: member.image_url || ''
         });
-        setIsAdding(true);
+        setIsModalOpen(true);
     };
 
     return (
         <div className="space-y-8">
-            <div className="flex justify-between items-center">
-                <h3 className="text-xl font-bold text-text-primary">Manage Members</h3>
+            <div className="flex justify-between items-center bg-bg-surface/30 p-4 rounded-2xl border border-border-main backdrop-blur-sm">
+                <div>
+                    <h3 className="text-xl font-bold text-text-primary">Manage Members</h3>
+                    <p className="text-xs text-text-muted mt-1">Add or update club member profiles</p>
+                </div>
                 <button
                     onClick={() => {
-                        setIsAdding(!isAdding);
-                        setEditingMember(null);
-                        setFormData({ name: '', role: '', domain: '', image_url: '' });
+                        resetForm();
+                        setIsModalOpen(true);
                     }}
-                    className="theme-button flex items-center gap-2 py-2"
+                    className="theme-button flex items-center gap-2 py-2.5 px-6 shadow-lg shadow-brand/10"
                 >
-                    {isAdding ? <X size={18} /> : <Plus size={18} />}
-                    {isAdding ? 'Cancel' : 'Add Member'}
+                    <Plus size={18} />
+                    <span>Add Member</span>
                 </button>
             </div>
 
-            {isAdding && (
-                <div className="theme-card p-6 animate-in slide-in-from-top duration-300">
-                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Member Name</label>
-                            <input
-                                required
-                                value={formData.name}
-                                onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                            />
+            <AdminModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title={editingMember ? 'Edit Member Profile' : 'Add New Member'}
+            >
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Member Name</label>
+                        <input
+                            required
+                            placeholder="e.g. Rounak Kumar"
+                            value={formData.name}
+                            onChange={e => setFormData({ ...formData, name: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Role</label>
+                        <input
+                            required
+                            placeholder="e.g. Technical Head"
+                            value={formData.role}
+                            onChange={e => setFormData({ ...formData, role: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Domain</label>
+                        <input
+                            required
+                            placeholder="e.g. Web Developer"
+                            value={formData.domain}
+                            onChange={e => setFormData({ ...formData, domain: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1">Image URL</label>
+                        <input
+                            placeholder="https://your-image-url.com"
+                            value={formData.image_url}
+                            onChange={e => setFormData({ ...formData, image_url: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all"
+                        />
+                    </div>
+                    {formData.image_url && (
+                        <div className="col-span-1 md:col-span-2 flex justify-center py-4 bg-bg-surface/20 rounded-2xl border border-dashed border-border-main">
+                            <div className="text-center">
+                                <p className="text-[10px] uppercase tracking-widest text-text-muted mb-2">Avatar Preview</p>
+                                <img src={formData.image_url} alt="Preview" className="w-20 h-20 rounded-full object-cover border-2 border-brand mx-auto shadow-lg" />
+                            </div>
                         </div>
-                        <div>
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Role (e.g., President)</label>
-                            <input
-                                required
-                                value={formData.role}
-                                onChange={e => setFormData({ ...formData, role: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Domain (e.g., Management)</label>
-                            <input
-                                required
-                                value={formData.domain}
-                                onChange={e => setFormData({ ...formData, domain: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-text-secondary mb-2">Image URL</label>
-                            <input
-                                value={formData.image_url}
-                                onChange={e => setFormData({ ...formData, image_url: e.target.value })}
-                                className="w-full bg-bg-main border border-border-main rounded-lg px-4 py-2 text-text-primary focus:border-brand transition-colors"
-                                placeholder="https://..."
-                            />
-                        </div>
-                        <div className="md:col-span-2 flex justify-end">
-                            <button type="submit" className="theme-button px-12">
-                                {editingMember ? 'Update Member' : 'Create Member'}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            )}
+                    )}
+                    <div className="md:col-span-2 flex justify-end pt-2">
+                        <button type="submit" className="theme-button w-full sm:w-auto px-12 py-3 font-bold shadow-xl shadow-brand/20">
+                            {editingMember ? 'Update Profile' : 'Add Member'}
+                        </button>
+                    </div>
+                </form>
+            </AdminModal>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {loading ? (

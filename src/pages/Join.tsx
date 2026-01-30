@@ -130,7 +130,7 @@ export default function Join() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-text-muted"
-                                        placeholder="John Doe"
+                                        placeholder="Rounak Kumar"
                                         disabled={status === 'submitting'}
                                     />
                                 </div>
@@ -147,7 +147,7 @@ export default function Join() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand transition-all placeholder-text-muted"
-                                        placeholder="john@example.com"
+                                        placeholder="unknowngmr02@example.com"
                                         disabled={status === 'submitting'}
                                     />
                                 </div>

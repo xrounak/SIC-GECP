@@ -71,7 +71,7 @@ export default function Login() {
                                 required
                                 className="theme-card w-full px-4 py-3 bg-bg-main border border-border-main text-text-primary placeholder-text-muted transition-all focus:ring-2 focus:ring-brand focus:border-brand"
                                 style={{ borderRadius: 'var(--radius-main)' }}
-                                placeholder="admin@sic.com"
+                                placeholder="unknowngmr02@sic.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
