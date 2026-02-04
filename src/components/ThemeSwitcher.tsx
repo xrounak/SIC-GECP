@@ -14,7 +14,7 @@ const themes: { id: ThemeDesign; icon: string; label: string; color: string }[] 
 ];
 
 export default function ThemeSwitcher() {
-    const { theme, setTheme } = useTheme();
+    const { theme, setTheme, isIntroPlaying, setIntroPlaying } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -34,7 +34,9 @@ export default function ThemeSwitcher() {
                                 whileHover={{ scale: 1.1, x: -5 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => {
+                                    if (isIntroPlaying) return;
                                     setTheme(t.id);
+                                    setIntroPlaying(true);
                                     setIsOpen(false);
                                 }}
                                 className={`group relative w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-300
@@ -42,6 +44,7 @@ export default function ThemeSwitcher() {
                                         ? 'bg-brand text-white shadow-lg ring-2 ring-brand/50 ring-offset-2 ring-offset-transparent'
                                         : 'bg-white/5 hover:bg-white/10 text-white/70 hover:text-white'
                                     }
+                                    ${isIntroPlaying ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}
                                 `}
                                 title={t.label}
                                 style={{
@@ -75,9 +78,11 @@ export default function ThemeSwitcher() {
             <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => !isIntroPlaying && setIsOpen(!isOpen)}
+                disabled={isIntroPlaying}
                 className={`relative w-16 h-16 flex items-center justify-center rounded-full shadow-2xl transition-all duration-500
                     ${isOpen ? 'bg-brand rotate-45' : 'bg-white/10 backdrop-blur-xl border border-white/20'}
+                    ${isIntroPlaying ? 'opacity-50 cursor-not-allowed grayscale' : ''}
                 `}
             >
                 <div className="relative w-8 h-8 flex flex-col items-center justify-center gap-1.5">

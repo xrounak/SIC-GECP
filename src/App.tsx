@@ -9,10 +9,12 @@ import Join from './pages/Join';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
 import ThemeSwitcher from './components/ThemeSwitcher';
+import IntroManager from './components/IntroManager';
 
 export default function App() {
   return (
     <div className="min-h-screen bg-bg-main transition-colors duration-500">
+      <IntroManager />
       <Navbar />
       <main className="flex-grow">
         <Routes>

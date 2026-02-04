@@ -1,26 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import IntroScreen from '../components/IntroScreen3';
 import EventCard from '../components/EventCard';
 import { supabase } from '../services/supabaseClient';
 import type { Event } from '../types';
 import heroBg from '../assets/image.png';
 
 // Module-level variable to track intro state across navigation within the same session refresh.
-// This resets to false only when the page is fully reloaded (refreshed).
-let hasPlayedIntro = false;
+// (Keeping this comment if we need module level tracking later, but removing the intro logic for now as it's handled globally)
 
 export default function Home() {
-    const [showIntro, setShowIntro] = useState(!hasPlayedIntro);
     const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
     const [loadingEvents, setLoadingEvents] = useState(true);
-
-    const handleIntroComplete = () => {
-        setShowIntro(false);
-        hasPlayedIntro = true;
-    };
 
     useEffect(() => {
         async function fetchFeaturedEvents() {
@@ -49,10 +40,6 @@ export default function Home() {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <AnimatePresence>
-                {showIntro && <IntroScreen onComplete={handleIntroComplete} />}
-            </AnimatePresence>
-
             <Helmet>
                 <title>SIC GEC Palamu | Science and Innovation Club</title>
                 <meta

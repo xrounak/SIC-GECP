@@ -50,8 +50,8 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                     className="mb-8 inline-block"
                 >
-                    <div className="theme-card w-28 h-28 flex items-center justify-center backdrop-blur-3xl">
-                        <span className="text-5xl font-black text-brand italic drop-shadow-sm">SIC</span>
+                    <div className="theme-card w-20 h-20 md:w-28 md:h-28 flex items-center justify-center backdrop-blur-3xl">
+                        <span className="text-4xl md:text-5xl font-black text-brand italic drop-shadow-sm">SIC</span>
                     </div>
                 </motion.div>
 
@@ -61,7 +61,7 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
                         initial={{ y: 100, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
-                        className="liquid-text text-5xl md:text-8xl font-black tracking-tighter mb-4 text-center"
+                        className="liquid-text text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-4 text-center px-4"
                         data-text="unknownGmr02"
                     >
                         unknownGmr02
@@ -75,7 +75,7 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
                     transition={{ delay: 1.2, duration: 0.8 }}
                     className="relative"
                 >
-                    <p className="text-xl md:text-2xl text-brand font-medium tracking-widest uppercase">
+                    <p className="text-lg md:text-2xl text-brand font-medium tracking-widest uppercase">
                         Science & Innovation Club
                     </p>
 

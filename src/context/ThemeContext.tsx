@@ -12,6 +12,8 @@ export type ThemeDesign =
 interface ThemeContextType {
     theme: ThemeDesign;
     setTheme: (theme: ThemeDesign) => void;
+    isIntroPlaying: boolean;
+    setIntroPlaying: (playing: boolean) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -21,6 +23,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         const saved = localStorage.getItem('sic-theme');
         return (saved as ThemeDesign) || 'amoled';
     });
+    const [isIntroPlaying, setIntroPlaying] = useState(true);
 
     const setTheme = (newTheme: ThemeDesign) => {
         setThemeState(newTheme);
@@ -32,7 +35,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }, [theme]);
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
+        <ThemeContext.Provider value={{ theme, setTheme, isIntroPlaying, setIntroPlaying }}>
             {children}
         </ThemeContext.Provider>
     );
