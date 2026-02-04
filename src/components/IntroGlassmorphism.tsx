@@ -53,7 +53,7 @@ export default function IntroGlassmorphism({ onComplete }: { onComplete: () => v
                         transition={{ delay: 0.8, duration: 1 }}
                         className="text-4xl md:text-6xl font-thin tracking-[0.2em]"
                     >
-                        GLASS
+                        INNOVATE
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0 }}
@@ -61,7 +61,7 @@ export default function IntroGlassmorphism({ onComplete }: { onComplete: () => v
                         transition={{ delay: 1.2 }}
                         className="text-sm tracking-[0.5em] mt-2 uppercase font-light"
                     >
-                        Reality Refracted
+                        Beyond Imagination
                     </motion.p>
                 </div>
 

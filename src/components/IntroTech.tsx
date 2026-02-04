@@ -55,7 +55,7 @@ export default function IntroTech({ onComplete }: { onComplete: () => void }) {
         // --- TEXT GLITCH EFFECT ---
         let frameId: number;
         let iteration = 0;
-        const targetText = 'unknownGmr02';
+        const targetText = 'SYSTEM_ONLINE';
 
         const animateText = () => {
             if (!textRef.current) return;
@@ -147,7 +147,7 @@ export default function IntroTech({ onComplete }: { onComplete: () => void }) {
                     ref={subTextRef}
                     className="text-brand/80 text-sm tracking-[0.5em] uppercase animate-pulse border-t border-b border-brand/20 py-2 px-8"
                 >
-                    SYSTEM_OVERRIDE
+                    INNOVATE_EXECUTE
                 </p>
             </div>
 

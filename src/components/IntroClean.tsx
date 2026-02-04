@@ -8,7 +8,7 @@ export default function IntroClean({ onComplete }: { onComplete: () => void }) {
         return () => clearTimeout(timer);
     }, [onComplete]);
 
-    const title = "unknownGmr02";
+    const title = "Innovation Hub";
 
     const containerVariants: Variants = {
         visible: {
@@ -99,7 +99,7 @@ export default function IntroClean({ onComplete }: { onComplete: () => void }) {
                     transition={{ delay: 2, duration: 1 }}
                     className="text-xs font-semibold tracking-[0.4em] uppercase text-gray-400"
                 >
-                    Experiences Crafted
+                    Ideas Into Reality
                 </motion.p>
             </motion.div>
         </motion.div>

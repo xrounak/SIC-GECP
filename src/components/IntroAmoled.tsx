@@ -55,9 +55,9 @@ export default function IntroAmoled({ onComplete }: { onComplete: () => void }) 
                     transition={{ delay: 1 }}
                     className="absolute -bottom-16 md:-bottom-24 left-1/2 -translate-x-1/2 text-center text-white font-sans tracking-[0.3em] text-xs md:text-sm whitespace-nowrap"
                 >
-                    <span className="text-[#00ffcc]">UNKNOWN</span>
+                    <span className="text-[#00ffcc]">CODE</span>
                     <span className="text-gray-600 mx-2">|</span>
-                    <span className="text-[#ff00ff]">GMR02</span>
+                    <span className="text-[#ff00ff]">DEPLOY</span>
                 </motion.h1>
             </div>
         </motion.div>

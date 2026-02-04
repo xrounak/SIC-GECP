@@ -49,7 +49,7 @@ export default function IntroClaymorphism({ onComplete }: { onComplete: () => vo
                         transition={{ delay: 0.5 }}
                         className="text-3xl md:text-5xl font-nunito font-extrabold text-[#4a5568]"
                     >
-                        unknownGmr02
+                        Science & Innovation Club
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0 }}
@@ -57,7 +57,7 @@ export default function IntroClaymorphism({ onComplete }: { onComplete: () => vo
                         transition={{ delay: 0.8 }}
                         className="text-lg text-[#a0aec0] font-bold mt-2"
                     >
-                        Welcome Back!
+                        Let's Build Together
                     </motion.p>
                 </div>
 

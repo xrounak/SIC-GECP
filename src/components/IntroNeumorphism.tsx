@@ -7,7 +7,7 @@ export default function IntroNeumorphism({ onComplete }: { onComplete: () => voi
         return () => clearTimeout(timer);
     }, [onComplete]);
 
-    const title = "unknownGmr02";
+    const title = "Think & Build";
 
     return (
         <motion.div

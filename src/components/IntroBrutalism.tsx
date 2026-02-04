@@ -45,9 +45,9 @@ export default function IntroBrutalism({ onComplete }: { onComplete: () => void 
                         transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
                         className="text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tighter leading-none px-4"
                     >
-                        UNKNOWN
+                        BUILD
                         <br />
-                        <span className="text-transparent stroke-black stroke-2" style={{ WebkitTextStroke: '2px black' }}>GMR02</span>
+                        <span className="text-transparent stroke-black stroke-2" style={{ WebkitTextStroke: '2px black' }}>CREATE</span>
                     </motion.h1>
 
                     <motion.div
@@ -58,7 +58,7 @@ export default function IntroBrutalism({ onComplete }: { onComplete: () => void 
                     />
 
                     <div className="flex justify-between font-bold text-sm tracking-widest mt-2">
-                        <span>LOADING ASSETS...</span>
+                        <span>INITIALIZING SIC...</span>
                         <span>100%</span>
                     </div>
                 </div>

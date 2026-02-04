@@ -62,9 +62,9 @@ export default function IntroScreen({ onComplete }: { onComplete: () => void }) 
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
                         className="liquid-text text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-4 text-center px-4"
-                        data-text="unknownGmr02"
+                        data-text="Build the Future"
                     >
-                        unknownGmr02
+                        Build the Future
                     </motion.h1>
                 </div>
 
