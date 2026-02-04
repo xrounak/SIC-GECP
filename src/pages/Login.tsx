@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { supabase } from '../services/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 
@@ -38,13 +37,11 @@ export default function Login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-bg-main px-4 transition-colors duration-500">
-            <Helmet>
-                <title>Student/Admin Login | SIC GEC Palamu Access</title>
-                <meta
-                    name="description"
-                    content="Secure portal for members and administrators of the Science and Innovation Club, Government Engineering College Palamu."
-                />
-            </Helmet>
+            <title>Student/Admin Login | SIC GEC Palamu Access</title>
+            <meta
+                name="description"
+                content="Secure portal for members and administrators of the Science and Innovation Club, Government Engineering College Palamu."
+            />
             <div className="theme-card max-w-md w-full space-y-8 p-8 relative overflow-hidden backdrop-blur-sm">
                 {/* Decorative Glow */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full blur-[60px] pointer-events-none" />

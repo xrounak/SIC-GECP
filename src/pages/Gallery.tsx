@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { supabase } from '../services/supabaseClient';
 import type { GalleryImage } from '../types';
 
@@ -32,13 +31,11 @@ export default function Gallery() {
 
     return (
         <div className="bg-bg-main min-h-screen py-24 transition-colors duration-500">
-            <Helmet>
-                <title>Event Gallery & Highlights | SIC GEC Palamu</title>
-                <meta
-                    name="description"
-                    content="Explore the visual journey of the Science and Innovation Club at GEC Palamu. Photos and videos from our latest tech fests and innovation workshops."
-                />
-            </Helmet>
+            <title>Event Gallery & Highlights | SIC GEC Palamu</title>
+            <meta
+                name="description"
+                content="Explore the visual journey of the Science and Innovation Club at GEC Palamu. Photos and videos from our latest tech fests and innovation workshops."
+            />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white via-text-primary to-text-secondary drop-shadow-sm">

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import EventCard from '../components/EventCard';
 import { supabase } from '../services/supabaseClient';
 import type { Event } from '../types';
@@ -40,13 +39,11 @@ export default function Home() {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <Helmet>
-                <title>SIC GEC Palamu | Science and Innovation Club</title>
-                <meta
-                    name="description"
-                    content="Science and Innovation Club of Government Engineering College Palamu. Promoting innovation, startups, and technical growth."
-                />
-            </Helmet>
+            <title>SIC GEC Palamu | Science and Innovation Club</title>
+            <meta
+                name="description"
+                content="Science and Innovation Club of Government Engineering College Palamu. Promoting innovation, startups, and technical growth."
+            />
 
             {/* Hero Section */}
             <section className="relative bg-bg-main text-text-primary py-24 sm:py-32 overflow-hidden">

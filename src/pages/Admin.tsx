@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../services/supabaseClient';
 import type { JoinApplication, EventRegistration } from '../types';
@@ -52,13 +51,11 @@ export default function Admin() {
 
     return (
         <div className="bg-bg-main min-h-screen py-24 transition-colors duration-500">
-            <Helmet>
-                <title>Dashboard & Club Management | SIC GEC Palamu</title>
-                <meta
-                    name="description"
-                    content="Administrative control panel for managing events, members, and content for the GEC Palamu Science and Innovation Club website."
-                />
-            </Helmet>
+            <title>Dashboard & Club Management | SIC GEC Palamu</title>
+            <meta
+                name="description"
+                content="Administrative control panel for managing events, members, and content for the GEC Palamu Science and Innovation Club website."
+            />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-6">
                     <h1 className="text-3xl font-bold text-text-primary drop-shadow-sm">Admin Dashboard</h1>
