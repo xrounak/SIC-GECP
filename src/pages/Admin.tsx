@@ -219,8 +219,8 @@ export default function Admin() {
                                                             <td className="px-3 sm:px-6 py-4 font-bold text-text-primary">
                                                                 {reg.events?.title || 'Unknown Event'}
                                                             </td>
-                                                            <td className="px-3 sm:px-6 py-4 text-text-secondary">{reg.name}</td>
-                                                            <td className="px-3 sm:px-6 py-4 text-text-secondary font-mono text-[10px] sm:text-xs">{reg.email}</td>
+                                                            <td className="px-3 sm:px-6 py-4 text-text-secondary">{reg.team_leader_name}</td>
+                                                            <td className="px-3 sm:px-6 py-4 text-text-secondary font-mono text-[10px] sm:text-xs">{reg.team_leader_email}</td>
                                                             <td className="px-3 sm:px-6 py-4 text-text-muted text-[10px] font-mono">{reg.id.slice(0, 8)}</td>
                                                         </tr>
                                                     ))}
