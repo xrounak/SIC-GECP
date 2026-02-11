@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import EventCard from '../components/EventCard';
+import EventCard from '../components/common/EventCard';
 import { supabase } from '../services/supabaseClient';
 import type { Event } from '../types';
 import heroBg from '../assets/image.png';
+import Skeleton from '../components/common/Skeleton';
 
 // Module-level variable to track intro state across navigation within the same session refresh.
 // (Keeping this comment if we need module level tracking later, but removing the intro logic for now as it's handled globally)
@@ -100,7 +101,13 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {loadingEvents ? (
                             Array.from({ length: 3 }).map((_, i) => (
-                                <div key={i} className="theme-card h-80 animate-pulse" />
+                                <div key={i} className="theme-card h-80 flex flex-col">
+                                    <Skeleton className="h-40 w-full" />
+                                    <div className="p-5 flex-1 space-y-3">
+                                        <Skeleton className="h-6 w-3/4" />
+                                        <Skeleton className="h-4 w-1/2" />
+                                    </div>
+                                </div>
                             ))
                         ) : featuredEvents.length > 0 ? (
                             featuredEvents.map((event) => (

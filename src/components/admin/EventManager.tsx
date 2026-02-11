@@ -14,6 +14,7 @@ export default function EventManager() {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
+        content_md: '',
         date: '',
         venue: '',
         status: 'upcoming' as 'upcoming' | 'past'
@@ -31,7 +32,7 @@ export default function EventManager() {
     }, []);
 
     const resetForm = () => {
-        setFormData({ title: '', description: '', date: '', venue: '', status: 'upcoming' });
+        setFormData({ title: '', description: '', content_md: '', date: '', venue: '', status: 'upcoming' });
         setEditingEvent(null);
     };
 
@@ -54,12 +55,12 @@ export default function EventManager() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        const { title, description, date, venue, status } = formData;
+        const { title, description, content_md, date, venue, status } = formData;
 
         if (editingEvent) {
             const { error } = await supabase
                 .from('events')
-                .update({ title, description, date, venue, status })
+                .update({ title, description, content_md, date, venue, status })
                 .eq('id', editingEvent.id);
 
             if (error) alert('Error updating event');
@@ -70,7 +71,7 @@ export default function EventManager() {
         } else {
             const { error } = await supabase
                 .from('events')
-                .insert([{ title, description, date, venue, status }]);
+                .insert([{ title, description, content_md, date, venue, status }]);
 
             if (error) alert('Error adding event');
             else {
@@ -97,6 +98,7 @@ export default function EventManager() {
         setFormData({
             title: event.title,
             description: event.description || '',
+            content_md: event.content_md || '',
             date: toLocalISOString(new Date(event.date)),
             venue: event.venue,
             status: event.status
@@ -140,12 +142,21 @@ export default function EventManager() {
                         />
                     </div>
                     <div className="col-span-2 space-y-2">
-                        <label className="text-sm font-bold text-text-secondary ml-1">Description</label>
+                        <label className="text-sm font-bold text-text-secondary ml-1">Short Description</label>
                         <textarea
-                            placeholder="Tell everyone what this event is about..."
+                            placeholder="A brief summary for the preview card..."
                             value={formData.description}
                             onChange={e => setFormData({ ...formData, description: e.target.value })}
-                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand focus:ring-1 focus:ring-brand transition-all h-32"
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand focus:ring-1 focus:ring-brand transition-all h-20"
+                        />
+                    </div>
+                    <div className="col-span-2 space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1 text-brand">Markdown Content (Extended Details)</label>
+                        <textarea
+                            placeholder="Write full event details here. Supports Markdown (e.g., # Header, **Bold**, - Lists, etc.)"
+                            value={formData.content_md}
+                            onChange={e => setFormData({ ...formData, content_md: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand focus:ring-1 focus:ring-brand font-mono text-sm transition-all h-48"
                         />
                     </div>
                     <div className="space-y-2">

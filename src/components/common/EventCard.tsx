@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import type { Event } from '../types';
+import { Link } from 'react-router-dom';
+import type { Event } from '../../types';
 import RegistrationModal from './RegistrationModal';
+import { ExternalLink } from 'lucide-react';
 
 interface EventCardProps {
     event: Event;
@@ -16,10 +18,7 @@ export default function EventCard({ event }: EventCardProps) {
                 <div className={`h-1 ${isUpcoming ? 'bg-gradient-to-r from-brand to-accent' : 'bg-text-muted/20'}`} />
                 <div className="p-6 flex-grow flex flex-col">
                     <div className="flex items-start justify-between mb-4">
-                        <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${isUpcoming
-                            ? 'bg-brand/10 text-brand border-brand/20'
-                            : 'bg-text-muted/10 text-text-muted border-text-muted/20'
-                            }`}>
+                        <span className={`theme-badge ${isUpcoming ? '' : 'opacity-50 grayscale'}`}>
                             {isUpcoming ? 'Upcoming' : 'Past'}
                         </span>
                         <div className="text-right">
@@ -35,7 +34,12 @@ export default function EventCard({ event }: EventCardProps) {
                         </div>
                     </div>
 
-                    <h3 className="text-xl font-bold text-text-primary mb-2 group-hover:text-brand transition-colors">{event.title}</h3>
+                    <Link to={`/events/${event.id}`}>
+                        <h3 className="text-xl font-bold text-text-primary mb-2 group-hover:text-brand transition-colors flex items-center gap-2">
+                            {event.title}
+                            <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </h3>
+                    </Link>
                     <p className="text-text-secondary text-sm mb-4 line-clamp-2 flex-grow">{event.description}</p>
 
                     <div className="flex items-center text-text-muted text-sm mb-6">
@@ -46,16 +50,21 @@ export default function EventCard({ event }: EventCardProps) {
                         {event.venue}
                     </div>
 
-                    {isUpcoming && (
-                        <div className="mt-auto pt-4 border-t border-border-main">
-                            <button
-                                onClick={() => setIsModalOpen(true)}
-                                className="theme-button w-full py-2 px-4 font-medium transition-all text-sm"
-                            >
-                                Register Now
-                            </button>
-                        </div>
-                    )}
+                    <div className="mt-auto pt-4 border-t border-border-main flex gap-2">
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="theme-button flex-1 py-2 px-3 transition-all text-xs"
+                        >
+                            Register
+                        </button>
+                        <Link
+                            to={`/events/${event.id}`}
+                            className="theme-button-secondary flex-1 py-2 px-3 transition-all text-xs"
+                        >
+                            Details
+                            <ExternalLink size={12} />
+                        </Link>
+                    </div>
                 </div>
             </div>
 

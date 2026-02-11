@@ -4,6 +4,7 @@ import { Trash2, Edit2, Plus } from 'lucide-react';
 import type { GalleryImage } from '../../types';
 
 import AdminModal from './AdminModal';
+import OptimizedImage from '../common/OptimizedImage';
 
 export default function GalleryManager() {
     const [images, setImages] = useState<GalleryImage[]>([]);
@@ -13,7 +14,8 @@ export default function GalleryManager() {
 
     const [formData, setFormData] = useState({
         image_url: '',
-        caption: ''
+        caption: '',
+        details_md: ''
     });
 
     useEffect(() => {
@@ -21,7 +23,7 @@ export default function GalleryManager() {
     }, []);
 
     const resetForm = () => {
-        setFormData({ image_url: '', caption: '' });
+        setFormData({ image_url: '', caption: '', details_md: '' });
         setEditingImage(null);
     };
 
@@ -44,12 +46,12 @@ export default function GalleryManager() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        const { image_url, caption } = formData;
+        const { image_url, caption, details_md } = formData;
 
         if (editingImage) {
             const { error } = await supabase
                 .from('gallery')
-                .update({ image_url, caption })
+                .update({ image_url, caption, details_md })
                 .eq('id', editingImage.id);
 
             if (error) alert('Error updating image');
@@ -60,7 +62,7 @@ export default function GalleryManager() {
         } else {
             const { error } = await supabase
                 .from('gallery')
-                .insert([{ image_url, caption }]);
+                .insert([{ image_url, caption, details_md }]);
 
             if (error) alert('Error adding image');
             else {
@@ -86,7 +88,8 @@ export default function GalleryManager() {
         setEditingImage(img);
         setFormData({
             image_url: img.image_url,
-            caption: img.caption || ''
+            caption: img.caption || '',
+            details_md: img.details_md || ''
         });
         setIsModalOpen(true);
     };
@@ -135,16 +138,25 @@ export default function GalleryManager() {
                             className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all"
                         />
                     </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1 text-brand">Image Details (Markdown)</label>
+                        <textarea
+                            placeholder="Add more context about this photo (supports Markdown)..."
+                            value={formData.details_md}
+                            onChange={e => setFormData({ ...formData, details_md: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all font-mono text-sm h-32"
+                        />
+                    </div>
 
                     {formData.image_url && (
                         <div className="space-y-2">
                             <p className="text-[10px] uppercase tracking-widest text-text-muted ml-1">Image Preview</p>
-                            <div className="border border-border-main rounded-2xl overflow-hidden shadow-2xl">
-                                <img
+                            <div className="border border-border-main rounded-2xl overflow-hidden shadow-2xl h-64">
+                                <OptimizedImage
                                     src={formData.image_url}
                                     alt="Preview"
-                                    className="w-full h-64 object-cover"
-                                    onError={(e) => (e.currentTarget.style.display = 'none')}
+                                    className="w-full h-full object-cover"
+                                    priority={true}
                                 />
                             </div>
                         </div>
@@ -164,7 +176,11 @@ export default function GalleryManager() {
                 ) : images.length > 0 ? (
                     images.map(img => (
                         <div key={img.id} className="theme-card group relative aspect-square overflow-hidden hover:border-brand/40 transition-colors">
-                            <img src={img.image_url} alt={img.caption || ''} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                            <OptimizedImage
+                                src={img.image_url}
+                                alt={img.caption || ''}
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            />
 
                             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4 backdrop-blur-[2px]">
                                 <div className="flex justify-end gap-2">

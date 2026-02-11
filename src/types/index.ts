@@ -5,6 +5,8 @@ export interface Member {
     role: string;
     domain: string;
     image_url: string;
+    bio_md?: string;
+    created_at?: string;
 }
 
 // Event type
@@ -15,6 +17,8 @@ export interface Event {
     date: string;
     venue: string;
     status: 'upcoming' | 'past';
+    content_md?: string;
+    created_at?: string;
 }
 
 // Join Application type
@@ -63,5 +67,6 @@ export interface GalleryImage {
     id: string;
     image_url: string;
     caption: string;
+    details_md?: string;
     created_at: string;
 }

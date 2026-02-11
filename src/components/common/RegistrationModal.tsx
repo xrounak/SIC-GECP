@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Users, User, ChevronDown, ChevronUp } from 'lucide-react';
-import { supabase } from '../services/supabaseClient';
-import { sendTelegramNotification } from '../utils/telegram';
-import type { Event } from '../types';
+import { supabase } from '../../services/supabaseClient';
+import { sendTelegramNotification } from '../../utils/telegram';
+import type { Event } from '../../types';
 
 interface RegistrationModalProps {
     isOpen: boolean;

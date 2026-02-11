@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../services/supabaseClient';
-import MemberCard from '../components/MemberCard';
+import MemberCard from '../components/common/MemberCard';
 import type { Member } from '../types';
+import Skeleton from '../components/common/Skeleton';
 
 export default function Members() {
     const [members, setMembers] = useState<Member[]>([]);
@@ -48,8 +49,17 @@ export default function Members() {
                 </div>
 
                 {loading ? (
-                    <div className="flex justify-center items-center py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand"></div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+                            <div key={i} className="theme-card h-[400px] flex flex-col">
+                                <Skeleton className="aspect-square w-full" />
+                                <div className="p-5 flex-1 space-y-3">
+                                    <Skeleton className="h-6 w-1/2" />
+                                    <Skeleton className="h-4 w-3/4" />
+                                    <Skeleton className="h-4 w-1/3" />
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 ) : members.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

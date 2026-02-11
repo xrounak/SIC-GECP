@@ -168,6 +168,20 @@ body {
   opacity: 0.3;
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}
+
 @keyframes flicker {
   0% {
     opacity: 0.97;
@@ -257,7 +271,7 @@ html {
 }
 
 .text-glow {
-  text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+  text-shadow: 0 0 20px var(--brand);
 }
 
 @keyframes pan {
@@ -307,7 +321,42 @@ html {
 
 .theme-button:hover {
   filter: brightness(1.2);
-  box-shadow: var(--shadow-hover, var(--shadow-main));
+  box-shadow: 0 5px 15px var(--brand);
+  transform: translateY(-2px);
+}
+
+.theme-button-secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  padding: 0.75rem 1.5rem;
+  border: var(--border-width) solid var(--border-main);
+  box-shadow: var(--shadow-main);
+  border-radius: var(--radius-main);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.theme-button-secondary:hover {
+  background-color: var(--bg-surface);
+  color: var(--brand);
+  border-color: var(--brand);
+  transform: translateY(-2px);
+}
+
+.theme-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--bg-surface);
+  color: var(--brand);
+  border: var(--border-width) solid var(--brand);
+  border-radius: var(--radius-main);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: var(--shadow-main);
 }
 
 @keyframes liquid {

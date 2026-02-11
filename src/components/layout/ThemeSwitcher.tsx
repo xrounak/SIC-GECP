@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
-import type { ThemeDesign } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
+import type { ThemeDesign } from '../../context/ThemeContext';
 
 const themes: { id: ThemeDesign; icon: string; label: string; color: string }[] = [
     { id: 'brutalism', icon: 'S', label: 'Neo-Brutalism', color: '#FDE047' },
@@ -14,7 +14,7 @@ const themes: { id: ThemeDesign; icon: string; label: string; color: string }[] 
 ];
 
 export default function ThemeSwitcher() {
-    const { theme, setTheme, isIntroPlaying, setIntroPlaying } = useTheme();
+    const { theme, setTheme, isIntroPlaying } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -36,7 +36,6 @@ export default function ThemeSwitcher() {
                                 onClick={() => {
                                     if (isIntroPlaying) return;
                                     setTheme(t.id);
-                                    setIntroPlaying(true);
                                     setIsOpen(false);
                                 }}
                                 className={`group relative w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-300

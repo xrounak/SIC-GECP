@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../services/supabaseClient';
-import EventCard from '../components/EventCard';
+import EventCard from '../components/common/EventCard';
 import type { Event } from '../types';
+import Skeleton from '../components/common/Skeleton';
 
 export default function Events() {
     const [events, setEvents] = useState<Event[]>([]);
@@ -51,8 +52,17 @@ export default function Events() {
                 </div>
 
                 {loading ? (
-                    <div className="flex justify-center items-center py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand"></div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {[1, 2, 3].map(i => (
+                            <div key={i} className="theme-card h-[400px] flex flex-col">
+                                <Skeleton className="h-48 w-full" />
+                                <div className="p-6 flex-1 space-y-4">
+                                    <Skeleton className="h-4 w-1/4" />
+                                    <Skeleton className="h-8 w-3/4" />
+                                    <Skeleton className="h-12 w-full" />
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 ) : (
                     <>

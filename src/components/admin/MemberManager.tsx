@@ -4,6 +4,7 @@ import { Trash2, Edit2, Plus, User } from 'lucide-react';
 import type { Member } from '../../types';
 
 import AdminModal from './AdminModal';
+import OptimizedImage from '../common/OptimizedImage';
 
 export default function MemberManager() {
     const [members, setMembers] = useState<Member[]>([]);
@@ -15,7 +16,8 @@ export default function MemberManager() {
         name: '',
         role: '',
         domain: '',
-        image_url: ''
+        image_url: '',
+        bio_md: ''
     });
 
     useEffect(() => {
@@ -23,7 +25,7 @@ export default function MemberManager() {
     }, []);
 
     const resetForm = () => {
-        setFormData({ name: '', role: '', domain: '', image_url: '' });
+        setFormData({ name: '', role: '', domain: '', image_url: '', bio_md: '' });
         setEditingMember(null);
     };
 
@@ -46,12 +48,12 @@ export default function MemberManager() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        const { name, role, domain, image_url } = formData;
+        const { name, role, domain, image_url, bio_md } = formData;
 
         if (editingMember) {
             const { error } = await supabase
                 .from('members')
-                .update({ name, role, domain, image_url })
+                .update({ name, role, domain, image_url, bio_md })
                 .eq('id', editingMember.id);
 
             if (error) alert('Error updating member');
@@ -62,7 +64,7 @@ export default function MemberManager() {
         } else {
             const { error } = await supabase
                 .from('members')
-                .insert([{ name, role, domain, image_url }]);
+                .insert([{ name, role, domain, image_url, bio_md }]);
 
             if (error) alert('Error adding member');
             else {
@@ -90,7 +92,8 @@ export default function MemberManager() {
             name: member.name,
             role: member.role,
             domain: member.domain,
-            image_url: member.image_url || ''
+            image_url: member.image_url || '',
+            bio_md: member.bio_md || ''
         });
         setIsModalOpen(true);
     };
@@ -159,11 +162,27 @@ export default function MemberManager() {
                             className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all"
                         />
                     </div>
+                    <div className="col-span-1 md:col-span-2 space-y-2">
+                        <label className="text-sm font-bold text-text-secondary ml-1 text-brand">Member Biography (Markdown)</label>
+                        <textarea
+                            placeholder="Describe the member's achievements, skills, and background..."
+                            value={formData.bio_md}
+                            onChange={e => setFormData({ ...formData, bio_md: e.target.value })}
+                            className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand transition-all font-mono text-sm h-32"
+                        />
+                    </div>
                     {formData.image_url && (
                         <div className="col-span-1 md:col-span-2 flex justify-center py-4 bg-bg-surface/20 rounded-2xl border border-dashed border-border-main">
                             <div className="text-center">
                                 <p className="text-[10px] uppercase tracking-widest text-text-muted mb-2">Avatar Preview</p>
-                                <img src={formData.image_url} alt="Preview" className="w-20 h-20 rounded-full object-cover border-2 border-brand mx-auto shadow-lg" />
+                                <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-brand mx-auto shadow-lg">
+                                    <OptimizedImage
+                                        src={formData.image_url}
+                                        alt="Preview"
+                                        className="w-full h-full object-cover"
+                                        priority={true}
+                                    />
+                                </div>
                             </div>
                         </div>
                     )}
@@ -183,7 +202,7 @@ export default function MemberManager() {
                         <div key={member.id} className="theme-card p-6 flex items-start gap-4 hover:border-brand/40 transition-colors">
                             <div className="w-16 h-16 rounded-full overflow-hidden bg-bg-main flex-shrink-0 border-2 border-border-main">
                                 {member.image_url ? (
-                                    <img src={member.image_url} alt={member.name} className="w-full h-full object-cover" />
+                                    <OptimizedImage src={member.image_url} alt={member.name} className="w-full h-full object-cover" />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center text-text-muted"><User size={32} /></div>
                                 )}
