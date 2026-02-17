@@ -37,6 +37,8 @@ export interface JoinApplication {
 export interface EventRegistration {
     id: string;
     event_id: string;
+    // Team Details
+    team_name: string;
     // Team Leader (required)
     team_leader_name: string;
     team_leader_branch: string;

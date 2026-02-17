@@ -18,6 +18,7 @@ interface TeamMember {
 }
 
 interface FormData {
+    teamName: string;
     teamLeader: {
         name: string;
         branch: string;
@@ -30,6 +31,7 @@ interface FormData {
 
 export default function RegistrationModal({ isOpen, onClose, event }: RegistrationModalProps) {
     const [formData, setFormData] = useState<FormData>({
+        teamName: '',
         teamLeader: {
             name: '',
             branch: '',
@@ -90,7 +92,13 @@ export default function RegistrationModal({ isOpen, onClose, event }: Registrati
 
     // Validate form
     const validateForm = (): boolean => {
-        const { teamLeader, members } = formData;
+        const { teamName, teamLeader, members } = formData;
+
+        // Validate Team Name
+        if (!teamName.trim()) {
+            setErrorMessage('Please enter a team name');
+            return false;
+        }
 
         // Validate team leader (all fields required)
         if (!teamLeader.name || !teamLeader.branch || !teamLeader.year || !teamLeader.email || !teamLeader.mobile) {
@@ -143,6 +151,7 @@ export default function RegistrationModal({ isOpen, onClose, event }: Registrati
             // Prepare data for Supabase
             const registrationData: any = {
                 event_id: event.id,
+                team_name: formData.teamName,
                 team_leader_name: formData.teamLeader.name,
                 team_leader_branch: formData.teamLeader.branch,
                 team_leader_year: formData.teamLeader.year,
@@ -173,6 +182,7 @@ export default function RegistrationModal({ isOpen, onClose, event }: Registrati
             let telegramMessage = `🎟️ *New Event Registration*\n\n`;
             telegramMessage += `*Event:* ${event.title}\n`;
             telegramMessage += `*Date:* ${new Date(event.date).toLocaleDateString()}\n\n`;
+            telegramMessage += `🚩 *TEAM: ${formData.teamName}*\n\n`;
             telegramMessage += `👤 *TEAM LEADER:*\n`;
             telegramMessage += `Name: ${formData.teamLeader.name}\n`;
             telegramMessage += `Branch: ${formData.teamLeader.branch}\n`;
@@ -209,6 +219,7 @@ export default function RegistrationModal({ isOpen, onClose, event }: Registrati
         if (status === 'submitting') return; // Prevent closing while submitting
 
         setFormData({
+            teamName: '',
             teamLeader: { name: '', branch: '', year: '', email: '', mobile: '' },
             members: []
         });
@@ -270,6 +281,24 @@ export default function RegistrationModal({ isOpen, onClose, event }: Registrati
 
                             {/* Form - Mobile Optimized */}
                             <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5 sm:space-y-6">
+                                {/* Team Name Section */}
+                                <div className="space-y-3 sm:space-y-4">
+                                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                                        <Users className="w-4 h-4 sm:w-5 sm:h-5 text-brand flex-shrink-0" />
+                                        <h3 className="text-base sm:text-lg font-semibold text-text-primary">Team Details</h3>
+                                        <span className="text-xs text-red-400">*Required</span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder="Team Name *"
+                                        value={formData.teamName}
+                                        onChange={(e) => setFormData({ ...formData, teamName: e.target.value })}
+                                        className="theme-card w-full px-3 sm:px-4 py-3 sm:py-2.5 text-sm bg-bg-main border border-border-main text-text-primary focus:ring-2 focus:ring-brand focus:border-brand placeholder-text-muted"
+                                        style={{ borderRadius: 'var(--radius-main)' }}
+                                        disabled={status === 'submitting' || status === 'success'}
+                                    />
+                                </div>
+
                                 {/* Team Leader Section */}
                                 <div className="space-y-3 sm:space-y-4">
                                     <div className="flex items-center gap-2 mb-3 sm:mb-4">
