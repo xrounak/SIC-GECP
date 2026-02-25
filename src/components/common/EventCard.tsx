@@ -9,17 +9,27 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event }: EventCardProps) {
+    const isOpen = event.status === 'open';
     const isUpcoming = event.status === 'upcoming';
+    const isPast = event.status === 'past';
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const getStatusStyles = () => {
+        switch (event.status) {
+            case 'open': return 'border-accent text-accent bg-accent/10';
+            case 'upcoming': return 'border-brand text-brand bg-brand/10';
+            default: return 'border-text-muted text-text-muted bg-text-muted/10 opacity-50 grayscale';
+        }
+    };
 
     return (
         <>
             <div className="theme-card transition-all duration-300 overflow-hidden flex flex-col h-full group">
-                <div className={`h-1 ${isUpcoming ? 'bg-gradient-to-r from-brand to-accent' : 'bg-text-muted/20'}`} />
+                <div className={`h-1 ${isOpen ? 'bg-accent' : isUpcoming ? 'bg-brand' : 'bg-text-muted/20'}`} />
                 <div className="p-6 flex-grow flex flex-col">
                     <div className="flex items-start justify-between mb-4">
-                        <span className={`theme-badge ${isUpcoming ? '' : 'opacity-50 grayscale'}`}>
-                            {isUpcoming ? 'Upcoming' : 'Past'}
+                        <span className={`theme-badge border rounded-full px-2 py-0.5 text-[10px] font-black uppercase tracking-widest ${getStatusStyles()}`}>
+                            {event.status}
                         </span>
                         <div className="text-right">
                             <p className="text-sm font-bold text-accent">
@@ -51,17 +61,19 @@ export default function EventCard({ event }: EventCardProps) {
                     </div>
 
                     <div className="mt-auto pt-4 border-t border-border-main flex gap-2">
-                        <button
-                            onClick={() => setIsModalOpen(true)}
-                            className="theme-button flex-1 py-2 px-3 transition-all text-xs"
-                        >
-                            Register
-                        </button>
+                        {isOpen && (
+                            <button
+                                onClick={() => setIsModalOpen(true)}
+                                className="theme-button flex-1 py-2 px-3 transition-all text-xs"
+                            >
+                                Register Now
+                            </button>
+                        )}
                         <Link
                             to={`/events/${event.id}`}
-                            className="theme-button-secondary flex-1 py-2 px-3 transition-all text-xs"
+                            className={`theme-button-secondary flex-1 py-2 px-3 transition-all text-xs flex items-center justify-center gap-2 ${!isOpen ? 'w-full' : ''}`}
                         >
-                            Details
+                            {isPast ? 'View Report' : 'Full Details'}
                             <ExternalLink size={12} />
                         </Link>
                     </div>

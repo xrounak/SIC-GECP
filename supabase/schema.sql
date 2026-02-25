@@ -31,7 +31,7 @@ create table if not exists events (
   description text,
   date timestamptz not null,
   venue text not null,
-  status text check (status in ('upcoming', 'past')) default 'upcoming',
+  status text check (status in ('open', 'upcoming', 'past')) default 'upcoming',
   created_at timestamptz default now()
 );
 

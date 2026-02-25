@@ -123,7 +123,10 @@ export default function EventDetails() {
 
                     <div className="relative z-10">
                         <div className="flex flex-wrap gap-3 mb-6">
-                            <span className={`theme-badge ${event.status === 'upcoming' ? 'animate-pulse' : 'opacity-50 grayscale'}`}>
+                            <span className={`theme-badge border rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest ${event.status === 'open' ? 'border-accent text-accent bg-accent/10' :
+                                    event.status === 'upcoming' ? 'border-brand text-brand bg-brand/10' :
+                                        'border-text-muted text-text-muted bg-text-muted/10 opacity-50 grayscale'
+                                }`}>
                                 {event.status}
                             </span>
                             <span className="theme-badge border-accent text-accent">
@@ -157,7 +160,7 @@ export default function EventDetails() {
                         </div>
 
                         <div className="flex flex-wrap gap-4">
-                            {event.status === 'upcoming' && (
+                            {event.status === 'open' && (
                                 <button
                                     onClick={() => setIsModalOpen(true)}
                                     className="theme-button px-8 py-3 font-bold text-lg flex items-center gap-2"

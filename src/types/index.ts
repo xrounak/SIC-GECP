@@ -16,7 +16,7 @@ export interface Event {
     description: string;
     date: string;
     venue: string;
-    status: 'upcoming' | 'past';
+    status: 'open' | 'upcoming' | 'past';
     content_md?: string;
     created_at?: string;
 }

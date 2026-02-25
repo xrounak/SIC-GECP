@@ -17,7 +17,7 @@ export default function EventManager() {
         content_md: '',
         date: '',
         venue: '',
-        status: 'upcoming' as 'upcoming' | 'past'
+        status: 'open' as 'open' | 'upcoming' | 'past'
     });
 
     // Helper to convert Date to local datetime-local string (YYYY-MM-DDTHH:mm)
@@ -186,7 +186,8 @@ export default function EventManager() {
                             onChange={e => setFormData({ ...formData, status: e.target.value as any })}
                             className="theme-card w-full bg-bg-main border border-border-main rounded-xl px-4 py-3 text-text-primary focus:border-brand focus:ring-1 focus:ring-brand transition-all cursor-pointer"
                         >
-                            <option value="upcoming">Upcoming</option>
+                            <option value="open">Open (Registering)</option>
+                            <option value="upcoming">Upcoming (Closed)</option>
                             <option value="past">Past</option>
                         </select>
                     </div>
@@ -207,7 +208,9 @@ export default function EventManager() {
                             <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-2">
                                     <h4 className="text-lg font-bold text-text-primary">{event.title}</h4>
-                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${event.status === 'upcoming' ? 'bg-brand/20 text-brand' : 'bg-text-muted/20 text-text-muted'
+                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${event.status === 'open' ? 'bg-accent/20 text-accent' :
+                                        event.status === 'upcoming' ? 'bg-brand/20 text-brand' :
+                                            'bg-text-muted/20 text-text-muted'
                                         }`}>
                                         {event.status}
                                     </span>

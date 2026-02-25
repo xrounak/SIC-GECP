@@ -31,12 +31,13 @@ export default function Events() {
         fetchEvents();
     }, []);
 
+    const openEvents = events.filter(e => e.status === 'open');
     const upcomingEvents = events.filter(e => e.status === 'upcoming');
     const pastEvents = events.filter(e => e.status === 'past');
 
     return (
         <div className="bg-bg-main min-h-screen py-24 transition-colors duration-500">
-            <title>Upcoming Events & Workshops | SIC GEC Palamu</title>
+            <title>Events & Workshops | SIC GEC Palamu</title>
             <meta
                 name="description"
                 content="Stay updated with the latest tech events, workshops, hackathons, and seminars organized by the Science and Innovation Club at GEC Palamu."
@@ -66,11 +67,29 @@ export default function Events() {
                     </div>
                 ) : (
                     <>
+                        {/* Open for Registration */}
+                        <section className="mb-20">
+                            <h2 className="text-2xl font-bold text-text-primary mb-8 border-l-4 border-accent pl-4 flex items-center transition-all uppercase tracking-wider">
+                                Registering Now
+                                <span className="ml-3 px-2 py-0.5 text-[10px] bg-accent/10 text-accent rounded-full animate-pulse border border-accent/20">LIVE</span>
+                            </h2>
+                            {openEvents.length > 0 ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {openEvents.map((event) => (
+                                        <EventCard key={event.id} event={event} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="theme-card text-text-muted italic p-8 text-center bg-bg-surface/30 border-dashed border-border-main/50">
+                                    No events currently open for registration.
+                                </p>
+                            )}
+                        </section>
+
                         {/* Upcoming Events */}
-                        <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-text-primary mb-8 border-l-4 border-brand pl-4 flex items-center transition-all">
+                        <section className="mb-20">
+                            <h2 className="text-2xl font-bold text-text-primary mb-8 border-l-4 border-brand pl-4 flex items-center transition-all uppercase tracking-wider">
                                 Upcoming Events
-                                <span className="ml-3 px-2 py-0.5 text-xs bg-brand/10 text-brand rounded-full animate-pulse border border-brand/20">LIVE</span>
                             </h2>
                             {upcomingEvents.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -79,25 +98,25 @@ export default function Events() {
                                     ))}
                                 </div>
                             ) : (
-                                <p className="theme-card text-text-muted italic p-8 text-center bg-bg-surface/30">
-                                    No upcoming events scheduled. Stay tuned!
+                                <p className="theme-card text-text-muted italic p-8 text-center bg-bg-surface/30 border-dashed border-border-main/50 text-sm">
+                                    Stay tuned! We are planning some exciting events for you.
                                 </p>
                             )}
                         </section>
 
                         {/* Past Events */}
-                        <section>
-                            <h2 className="text-2xl font-bold text-text-secondary mb-8 border-l-4 border-border-main pl-4 transition-all">
+                        <section className="opacity-80">
+                            <h2 className="text-2xl font-bold text-text-secondary mb-8 border-l-4 border-border-main pl-4 transition-all uppercase tracking-wider">
                                 Past Events
                             </h2>
                             {pastEvents.length > 0 ? (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 grayscale hover:grayscale-0 transition-all duration-500">
                                     {pastEvents.map((event) => (
                                         <EventCard key={event.id} event={event} />
                                     ))}
                                 </div>
                             ) : (
-                                <p className="text-text-muted italic">No past events found.</p>
+                                <p className="text-text-muted italic text-sm">Experience the legacy. No past events found.</p>
                             )}
                         </section>
                     </>
