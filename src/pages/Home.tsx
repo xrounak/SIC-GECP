@@ -19,7 +19,7 @@ export default function Home() {
                 const { data, error } = await supabase
                     .from('events')
                     .select('*')
-                    .eq('status', 'upcoming')
+                    .in('status', ['open', 'upcoming'])
                     .limit(3)
                     .order('date', { ascending: true });
 
@@ -92,7 +92,7 @@ export default function Home() {
             <section className="py-20 bg-bg-main transition-colors duration-500">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-text-primary mb-4 drop-shadow-sm">Upcoming Events</h2>
+                        <h2 className="text-3xl font-bold text-text-primary mb-4 drop-shadow-sm">Featured Events</h2>
                         <p className="text-text-muted max-w-2xl mx-auto">
                             Don't miss out on our latest workshops, tech talks, and hackathons.
                         </p>
