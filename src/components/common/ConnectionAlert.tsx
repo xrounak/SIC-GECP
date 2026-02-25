@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle, X, ShieldCheck, Phone } from 'lucide-react';
+import { AlertTriangle, X, ShieldCheck, Phone, ExternalLink } from 'lucide-react';
 
 export default function ConnectionAlert() {
     const [isOpen, setIsOpen] = useState(false);
@@ -44,20 +44,36 @@ export default function ConnectionAlert() {
                                     Network Advisory
                                 </h2>
                                 <p className="text-text-secondary leading-relaxed">
-                                    There is currently a widespread connectivity issue affecting <span className="text-brand font-bold">Supabase (Indian Servers)</span>.
+                                    We are experiencing connectivity issues with <span className="text-brand font-bold">Supabase (Indian Region)</span>. This may cause delays in loading data.
                                 </p>
                             </div>
 
                             <div className="theme-card bg-bg-main/50 p-5 border-brand/20 w-full rounded-2xl text-left">
                                 <p className="text-[10px] uppercase tracking-widest text-brand font-black mb-4 opacity-70">Recommended Actions</p>
                                 <ul className="space-y-4">
+                                    <li>
+                                        <a
+                                            href="https://status.supabase.com/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-start gap-3 text-text-primary group"
+                                        >
+                                            <div className="mt-0.5 w-6 h-6 rounded-full bg-brand/20 flex items-center justify-center text-brand flex-shrink-0 group-hover:bg-brand group-hover:text-white transition-all">
+                                                <ExternalLink size={14} />
+                                            </div>
+                                            <div className="text-sm">
+                                                <p className="font-bold border-b border-transparent group-hover:border-brand inline-block transition-all">Official System Status</p>
+                                                <p className="text-text-muted text-xs">Verify real-time server health at status.supabase.com</p>
+                                            </div>
+                                        </a>
+                                    </li>
                                     <li className="flex items-start gap-3 text-text-primary">
                                         <div className="mt-0.5 w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center text-accent flex-shrink-0">
                                             <ShieldCheck size={14} />
                                         </div>
                                         <div className="text-sm">
                                             <p className="font-bold">Use a VPN</p>
-                                            <p className="text-text-muted text-xs">Switch to US or Europe region for stable access.</p>
+                                            <p className="text-text-muted text-xs">Switch to US/Europe for stable routing.</p>
                                         </div>
                                     </li>
                                     <li className="flex items-start gap-3 text-text-primary">
@@ -76,7 +92,7 @@ export default function ConnectionAlert() {
                                 onClick={handleClose}
                                 className="theme-button w-full py-4 text-sm font-black uppercase tracking-widest shadow-lg shadow-brand/30 hover:scale-[1.02] active:scale-[0.98] transition-all"
                             >
-                                I Understand
+                                Continue to Site
                             </button>
 
                             <p className="text-[9px] text-text-muted uppercase tracking-[0.3em] font-medium pt-2">
