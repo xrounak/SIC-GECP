@@ -13,13 +13,12 @@ import MemberDetails from './pages/MemberDetails';
 import GalleryDetails from './pages/GalleryDetails';
 import ThemeSwitcher from './components/layout/ThemeSwitcher';
 import IntroManager from './components/intro/IntroManager';
-import ConnectionAlert from './components/common/ConnectionAlert';
+// import ConnectionAlert from './components/common/ConnectionAlert';
 
 export default function App() {
   return (
     <div className="min-h-screen bg-bg-main transition-colors duration-500">
       <IntroManager />
-      <ConnectionAlert />
       <Navbar />
       <main className="flex-grow">
         <Routes>
